@@ -1,20 +1,14 @@
 package com.example.romanconverter.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class RequestDTO {
     private String roman;
-
-    public String getRoman() {
-        return roman;
-    }
-
-    public void setRoman(String roman) {
-        this.roman = roman;
-    }
-
-    public RequestDTO() {
-    }
-
-    public RequestDTO(String roman) {
-        this.roman = roman;
-    }
 }

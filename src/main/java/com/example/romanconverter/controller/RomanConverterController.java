@@ -45,6 +45,11 @@ public class RomanConverterController {
     private String getRomanConverterPage(String roman, Model model) {
         final RomanConverter romanConverter = new RomanConverter(roman);
         model.addAttribute("romanConverter", romanConverter);
-        return "romanConverterPage.html";
+        return "view-conversion-result.html";
+    }
+
+    @GetMapping(value = "/")
+    public String home(Model model) {
+        return "view-home.html";
     }
 }
