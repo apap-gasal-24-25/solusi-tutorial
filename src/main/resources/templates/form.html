@@ -36,35 +36,44 @@
 			.error {
 				text-align: center;
 			}
+			.form-control {
+				flex: 1;
+				padding: 10px;
+				margin-right: 10px;
+				box-sizing: border-box;
+			}
+			.btn {
+				padding: 10px;
+				cursor: pointer;
+				box-sizing: border-box;
+			}
 		</style>
 	</head>
 	<body>
 		<div class="card">
-			<th:block th:if="${romanConverter != null}">
-				<div class="feature-title">
-					<h3>Roman Converter</h3>
-				</div>
-
-				<div class="container">
-					<div class="wrapper">
-						<h3>
-							Roman:
-							<span th:text="${romanConverter.getRoman}"></span>
-						</h3>
-					</div>
-					<div class="wrapper">
-						<h3>
-							Decimal:
-							<span
-								th:text="${romanConverter.convertRomanToDecimal()}"
-							></span>
-						</h3>
-					</div>
-				</div>
-			</th:block>
-			<div class="error" th:unless="${romanConverter != null}">
-				<h3 class="empty-input" th:text="${message}"></h3>
+			<div class="feature-title">
+				<h3>Roman Converter</h3>
 			</div>
+			<div class="container">
+				<form
+					th:action="@{/convert}"
+					th:object="${requestDTO}"
+					method="POST"
+				>
+					<h3>Enter the Roman that you want to convert.</h3>
+					<div class="wrapper">
+						<input
+							class="form-control"
+							type="text"
+							th:field="*{roman}"
+						/>
+						<button class="btn btn-primary" type="submit">
+							Convert
+						</button>
+					</div>
+				</form>
+			</div>
+			<div class="container"></div>
 		</div>
 	</body>
 </html>
