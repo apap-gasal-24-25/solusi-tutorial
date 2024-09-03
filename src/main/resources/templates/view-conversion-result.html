@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+	lang="en"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+>
 	<head>
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" th:href="@{/css/styles.css}" />
@@ -7,7 +11,7 @@
 	</head>
 	<body>
 		<div class="card">
-			<th:block th:if="${romanConverter != null}">
+			<div th:if="${message == null}">
 				<div class="feature-title">
 					<h3>Roman Converter</h3>
 				</div>
@@ -28,8 +32,8 @@
 						</h3>
 					</div>
 				</div>
-			</th:block>
-			<div class="error" th:unless="${romanConverter != null}">
+			</div>
+			<div class="error" th:if="${message != null}">
 				<h3 class="empty-input" th:text="${message}"></h3>
 			</div>
 		</div>

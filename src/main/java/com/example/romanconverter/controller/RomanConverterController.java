@@ -19,6 +19,10 @@ public class RomanConverterController {
 
     @GetMapping(value = "/roman-converter/{roman}")
     public String romanConverterWithPathVeriable(@PathVariable(value = "roman") String roman, Model model) {
+        if (!isInputValid(roman)) {
+            model.addAttribute("message", "Terdapat kesalahan pada input.");
+            getRomanConverterPage("", model);
+        }
         return getRomanConverterPage(roman, model);
     }
 
@@ -43,13 +47,32 @@ public class RomanConverterController {
     }
     
     private String getRomanConverterPage(String roman, Model model) {
-        final RomanConverter romanConverter = new RomanConverter(roman);
-        model.addAttribute("romanConverter", romanConverter);
+        if (roman.equals("")) {
+            final RomanConverter romanConverter = new RomanConverter(roman);
+            model.addAttribute("romanConverter", romanConverter);
+        }
         return "view-conversion-result.html";
     }
 
     @GetMapping(value = "/")
     public String home(Model model) {
         return "view-home.html";
+    }
+
+    private boolean isInputValid(String input) {
+        Pattern pattern = Pattern.compile("[^IVXLCDM]");
+
+        if (input.isBlank() || input.isEmpty() || pattern.matcher(input).find()) {
+            return false;
+        }
+
+        System.out.println("111111");
+        return true;
+    }
+
+    @GetMapping(value = "/dummy")
+    public String dummy(Model model) {
+        return "view-conversion-result.html";
+
     }
 }
