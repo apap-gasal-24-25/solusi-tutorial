@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<div class="card">
-			<th:block th:if="${romanConverter != null}">
+			<div th:if="${romanConverter != null}">
 				<div class="feature-title">
 					<h3>Roman Converter</h3>
 				</div>
@@ -28,9 +28,6 @@
 						</h3>
 					</div>
 				</div>
-			</th:block>
-			<div class="error" th:unless="${romanConverter != null}">
-				<h3 class="empty-input" th:text="${message}"></h3>
 			</div>
 		</div>
 	</body>
