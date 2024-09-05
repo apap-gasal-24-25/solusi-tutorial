@@ -34,7 +34,14 @@
 				</div>
 			</div>
 			<div class="error" th:if="${message != null}">
-				<h3 class="empty-input" th:text="${message}"></h3>
+				<div class="feature-title">
+					<h3>Roman Converter</h3>
+				</div>
+				<div class="container">
+					<div class="wrapper">
+						<h3 class="empty-input" th:text="${message}"></h3>
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>
