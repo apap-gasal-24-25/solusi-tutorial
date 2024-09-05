@@ -13,7 +13,7 @@ public class IntegerConverter {
         return num;
     }
 
-    public static String convertIntegerToRoman(int num) {
+    public String convertIntegerToRoman() {
         
         StringBuilder roman = new StringBuilder();
 
