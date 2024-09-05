@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html
+	lang="en"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" th:href="@{/css/styles.css}" />
+		<title>Roman Converter Page</title>
+	</head>
+	<body>
+		<div class="card">
+			<div th:if="${message == null}">
+				<div class="feature-title">
+					<h3>Roman Converter</h3>
+				</div>
+
+				<div class="container">
+					<div class="wrapper">
+						<h3>
+							Decimal:
+							<span th:text="${integerConverter.getNum}"></span>
+						</h3>
+					</div>
+					<div class="wrapper">
+						<h3>
+							Roman:
+							<span
+								th:text="${integerConverter.convertIntegerToRoman()}"
+							></span>
+						</h3>
+					</div>
+				</div>
+			</div>
+			<div class="error" th:if="${message != null}">
+				<div class="feature-title">
+					<h3>Roman Converter</h3>
+				</div>
+				<div class="container">
+					<div class="wrapper">
+						<h3 class="empty-input" th:text="${message}"></h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

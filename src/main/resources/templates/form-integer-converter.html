@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" th:href="@{/css/styles.css}" />
+		<title>Roman Converter Page</title>
+	</head>
+	<body>
+		<div class="card">
+			<div class="feature-title">
+				<h3>Roman Converter</h3>
+			</div>
+			<div class="container">
+				<form
+					th:action="@{/convert-integer}"
+					th:object="${integerRequestDTO}"
+					method="POST"
+				>
+					<h3>Enter the Integer that you want to convert.</h3>
+					<div class="wrapper">
+						<input
+							class="form-control"
+							type="text"
+							th:field="*{num}"
+						/>
+						<button class="btn btn-primary" type="submit">
+							Convert
+						</button>
+					</div>
+				</form>
+			</div>
+			<div class="container"></div>
+		</div>
+	</body>
+</html>
