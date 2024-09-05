@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html
+	lang="en"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+>
+	<head>
+		<meta charset="UTF-8" />
+		<link rel="stylesheet" th:href="@{/css/styles.css}" />
+		<title>Roman Converter Page</title>
+	</head>
+	<body>
+		<div class="card">
+				<div class="feature-title">
+					<h3>Roman Converter</h3>
+				</div>
+
+				<div class="container">
+					<div class="wrapper">
+						<h3>
+							Nama:
+							<span th:text="${nama}"></span>
+						</h3>
+					</div>
+					<div class="wrapper">
+						<h3>
+							NPM:
+							<span th:text="${npm}"></span>
+						</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

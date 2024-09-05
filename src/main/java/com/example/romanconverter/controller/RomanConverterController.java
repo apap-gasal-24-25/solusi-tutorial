@@ -75,4 +75,11 @@ public class RomanConverterController {
         return "view-conversion-result.html";
 
     }
+
+    @GetMapping(value = "/about-me")
+    public String aboutMe(Model model) {
+        model.addAttribute("nama", "Puti Adiva");
+        model.addAttribute("npm", 2006484835);
+        return "about-me.html";
+    }
 }
