@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <title>Home</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="text-center pt-5">
+            <h2 class="">Informasi Proyek</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="card" style="width: 30rem;">
+                <div class="card-body">
+                    <div class="row text-center mb-2">
+                        <h4 class="card-title" th:text="${proyek.nama}"></h4>
+                        <h5 class="card-subtitle mb-2 text-muted" th:text="${proyek.developer}"></h5>
+                    </div>
+                    <div>
+                        <p class="card-text m-0"><b>ID Proyek</b></p>
+                        <p class="card-text" th:text="${proyek.id}"></p>
+                        <p class="card-text m-0"><b>Tanggal Mulai</b></p>
+                        <p class="card-text" th:text="${proyek.tanggalMulai}"></p>
+                        <p class="card-text m-0"><b>Tanggal Selesai</b></p>
+                        <p class="card-text" th:text="${proyek.tanggalSelesai}"></p>
+                        <p class="card-text m-0"><b>Status proyek</b></p>
+                        <p class="card-text" th:text="${proyek.status}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center m-3">
+            <a type="button" class="btn btn-primary btn-md" href="/proyek/viewall">Kembali</a>
+        </div>
+    </div>
+</body>
+
+</html>

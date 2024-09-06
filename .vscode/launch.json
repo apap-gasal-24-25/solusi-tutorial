@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-RomanconverterApplication<RomanConverter>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.romanconverter.RomanconverterApplication",
+            "projectName": "RomanConverter",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ManpromanproApplication<manpromanpro>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "apap.tutorial.manpromanpro.ManpromanproApplication",
+            "projectName": "manpromanpro",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
