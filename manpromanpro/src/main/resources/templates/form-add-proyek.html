@@ -32,7 +32,10 @@
                         <br><br>
     
                         Status: <br>
-                        <input required class="form-control" type="text" th:field="*{status}"/> 
+                        <select required class="form-control" th:field="*{status}">
+                          <option th:each="status : ${T(apap.tutorial.manpromanpro.model.Proyek.StatusProyek).values()}" 
+                                th:value="${status}" th:text="${status}"></option>
+                        </select>
                         <br><br>
 
                         Developer: <br>

@@ -2,18 +2,20 @@ package apap.tutorial.manpromanpro.controller.DTO;
 
 import java.util.UUID;
 
+import apap.tutorial.manpromanpro.model.Proyek.StatusProyek;
+
 
 public class ProyekDTO {
     private UUID id;
     private String nama;
     private String tanggalMulai;
     private String tanggalSelesai;
-    private String status;
+    private StatusProyek status;
     private String developer;
 
     public ProyekDTO(){}
 
-    public ProyekDTO(UUID id, String nama, String tanggalMulai, String tanggalSelesai, String status, String developer) {
+    public ProyekDTO(UUID id, String nama, String tanggalMulai, String tanggalSelesai, StatusProyek status, String developer) {
         this.id = id;
         this.nama = nama;
         this.tanggalMulai = tanggalMulai;
@@ -55,11 +57,11 @@ public class ProyekDTO {
         this.tanggalSelesai = tanggalSelesai;
     }
 
-    public String getStatus() {
+    public StatusProyek getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusProyek status) {
         this.status = status;
     }
 

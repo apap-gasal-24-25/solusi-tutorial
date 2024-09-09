@@ -17,7 +17,7 @@ import apap.tutorial.manpromanpro.service.ProyekService;
 
 @Controller
 public class ProyekController {
-    
+
     @Autowired
     private ProyekService proyekService;
 
@@ -38,22 +38,22 @@ public class ProyekController {
 
     @PostMapping("/proyek/add")
     public String addProyek(@ModelAttribute ProyekDTO proyekDTO, Model model) {
-        
+
         // Generate UUID baru untuk proyek
         UUID idProyek = UUID.randomUUID();
-        
-        // Membuat objek proyek baru dengan data dari DTO
-       var proyek = new Proyek(idProyek, proyekDTO.getNama(), proyekDTO.getTanggalMulai(), 
-       proyekDTO.getTanggalSelesai(), proyekDTO.getStatus(), proyekDTO.getDeveloper());
-       
-       // Memanggil service untuk menambahkan proyek
-       proyekService.createProyek(proyek);
 
-       // add variabel id proyek ke 'id' untuk dirender di thymeleaf
-       model.addAttribute("id", proyek.getId());
-       
-       // add variabel nama proyek ke 'Nama' untuk dirender di thymeleaf
-       model.addAttribute("Nama", proyek.getNama());
+        // Membuat objek proyek baru dengan data dari DTO
+        var proyek = new Proyek(idProyek, proyekDTO.getNama(), proyekDTO.getTanggalMulai(),
+                proyekDTO.getTanggalSelesai(), proyekDTO.getStatus(), proyekDTO.getDeveloper());
+
+        // Memanggil service untuk menambahkan proyek
+        proyekService.createProyek(proyek);
+
+        // add variabel id proyek ke 'id' untuk dirender di thymeleaf
+        model.addAttribute("id", proyek.getId());
+
+        // add variabel nama proyek ke 'Nama' untuk dirender di thymeleaf
+        model.addAttribute("Nama", proyek.getNama());
 
         return "success-add-proyek";
     }
@@ -69,7 +69,7 @@ public class ProyekController {
         return "viewall-proyek";
     }
 
-    @GetMapping("/proyek/")
+    @GetMapping("/proyek")
     public String detailProyek(@RequestParam("id") String id, Model model) {
         // Mengambil proyek berdasarkan id
         var proyek = proyekService.getProyekById(UUID.fromString(id));
@@ -79,7 +79,5 @@ public class ProyekController {
 
         return "view-proyek";
     }
-
-
 
 }

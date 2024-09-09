@@ -3,15 +3,24 @@ package apap.tutorial.manpromanpro.model;
 import java.util.UUID;
 
 public class Proyek {
+
+    public enum StatusProyek{
+        PERENCANAAN,
+        EKSEKUSI,
+        SELESAI,
+        DITUNDA,
+        BATAL;
+    }
+
     private UUID id;
     private String nama;
     private String tanggalMulai;
     private String tanggalSelesai;
-    private String status;
+    private StatusProyek status;
     private String developer;
     
 
-    public Proyek(UUID id, String nama, String tanggalMulai, String tanggalSelesai, String status,
+    public Proyek(UUID id, String nama, String tanggalMulai, String tanggalSelesai, StatusProyek status,
             String developer) {
         this.id = id;
         this.nama = nama;
@@ -45,10 +54,10 @@ public class Proyek {
     public void setTanggalSelesai(String tanggalSelesai) {
         this.tanggalSelesai = tanggalSelesai;
     }
-    public String getStatus() {
+    public StatusProyek getStatus() {
         return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(StatusProyek status) {
         this.status = status;
     }
     public String getDeveloper() {
