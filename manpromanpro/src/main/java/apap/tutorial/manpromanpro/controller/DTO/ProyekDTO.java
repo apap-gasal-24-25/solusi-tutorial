@@ -1,21 +1,26 @@
 package apap.tutorial.manpromanpro.controller.DTO;
 
+import java.sql.Date;
 import java.util.UUID;
 
 
 public class ProyekDTO {
     private UUID id;
     private String nama;
-    private String tanggalMulai;
-    private String tanggalSelesai;
-    private String status;
+    private String deskripsi;
+    private String klien;
+    private Date tanggalMulai;
+    private Date tanggalSelesai;
+    private Integer status;
     private String developer;
 
     public ProyekDTO(){}
 
-    public ProyekDTO(UUID id, String nama, String tanggalMulai, String tanggalSelesai, String status, String developer) {
+    public ProyekDTO(UUID id, String nama, String deskripsi, String klien, Date tanggalMulai, Date tanggalSelesai, Integer status, String developer) {
         this.id = id;
         this.nama = nama;
+        this.deskripsi = deskripsi;
+        this.klien = klien;
         this.tanggalMulai = tanggalMulai;
         this.tanggalSelesai = tanggalSelesai;
         this.status = status;
@@ -39,27 +44,40 @@ public class ProyekDTO {
         this.nama = nama;
     }
 
-    public String getTanggalMulai() {
+    
+    public String getDeskripsi() {
+        return deskripsi;
+    }
+
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
+    }
+
+    public String getKlien() {
+        return klien;
+    }
+
+    public void setKlien(String klien) {
+        this.klien = klien;
+    }
+
+    public Date getTanggalMulai() {
         return tanggalMulai;
     }
-
-    public void setTanggalMulai(String tanggalMulai) {
+    public void setTanggalMulai(Date tanggalMulai) {
         this.tanggalMulai = tanggalMulai;
     }
-
-    public String getTanggalSelesai() {
+    public Date getTanggalSelesai() {
         return tanggalSelesai;
     }
-
-    public void setTanggalSelesai(String tanggalSelesai) {
+    public void setTanggalSelesai(Date tanggalSelesai) {
         this.tanggalSelesai = tanggalSelesai;
     }
-
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

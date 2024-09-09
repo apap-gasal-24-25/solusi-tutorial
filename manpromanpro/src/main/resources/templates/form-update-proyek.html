@@ -14,43 +14,37 @@
         <div class="card m-4 p-4">
             <div class="card-body">
                 <div class="justify-content-center">
-                    <h2>Tambah Proyek</h2>
+                    <h2>Ubah Proyek</h2>
                     <br>
-                    <form th:action="@{/proyek/add}" th:object="${proyekDTO}" method="POST">
-                      <input class="form-control" type="hidden" th:field="*{id}"/>
+                    <form th:action="@{/proyek/update}" th:object="${proyekDTO}" method="POST">
+                      <input class="form-control" type="hidden" th:field="*{id}" th:value="${proyekDTO.id}"/>
                       
                         Nama Proyek: <br>
-                        <input class="form-control" type="text" th:field="*{nama}"/> 
-                        <br><br>
-
-                        Deskripsi Proyek: <br>
-                        <input class="form-control" type="text" th:field="*{deskripsi}"/> 
-                        <br><br>
-
-                        Klien: <br>
-                        <input class="form-control" type="text" th:field="*{klien}"/> 
+                        <input class="form-control" type="text" th:field="*{nama}" th:value="${proyekDTO.nama}"/> 
                         <br><br>
     
                         Tanggal Mulai: <br>
-                        <input class="form-control" type="date" th:field="*{tanggalMulai}"/> 
+                        <input class="form-control " type="date" th:field="*{tanggalMulai}" th:value="${proyekDTO.tanggalMulai}"
+                        /> 
                         <br><br>
     
                         Tanggal Selesai: <br>
-                        <input class="form-control" type="date" th:field="*{tanggalSelesai}"/> 
+                        <input class="form-control datepicker" type="date" th:field="*{tanggalSelesai}" 
+                        /> 
                         <br><br>
     
                         Status: <br>
                         <td>
-                          <select th:field="*{status}" class="form-control">
-                            <option th:value=0>On Going</option>
-                            <option th:value=1>Finished</option>
-                          </select>
+                            <select th:field="*{status}" th:value="${proyekDTO.status == 0 ? 'On Going' : 'Finished'}" class="form-control">
+                              <option th:value=0>On Going</option>
+                              <option th:value=1>Finished</option>
+                            </select>
                         </td>
-                        <!-- <input required class="form-control" type="text" th:field="*{status}"/>  -->
+                        <!-- <input required class="form-control" type="text" th:field="*{status}" th:value="${proyekDTO.status}"/>  -->
                         <br><br>
 
                         Developer: <br>
-                        <input required class="form-control" type="text" th:field="*{developer}"/> 
+                        <input required class="form-control" type="text" th:field="*{developer}" th:value="${proyekDTO.developer}"/> 
                         <br><br>
     
                         

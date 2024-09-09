@@ -2,12 +2,14 @@ package apap.tutorial.manpromanpro.controller;
 
 import java.util.List;
 import java.util.UUID;
+import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -38,24 +40,64 @@ public class ProyekController {
 
     @PostMapping("/proyek/add")
     public String addProyek(@ModelAttribute ProyekDTO proyekDTO, Model model) {
-        
-        // Generate UUID baru untuk proyek
-        UUID idProyek = UUID.randomUUID();
-        
-        // Membuat objek proyek baru dengan data dari DTO
-       var proyek = new Proyek(idProyek, proyekDTO.getNama(), proyekDTO.getTanggalMulai(), 
-       proyekDTO.getTanggalSelesai(), proyekDTO.getStatus(), proyekDTO.getDeveloper());
-       
-       // Memanggil service untuk menambahkan proyek
-       proyekService.createProyek(proyek);
+        boolean isValid = true;
 
-       // add variabel id proyek ke 'id' untuk dirender di thymeleaf
-       model.addAttribute("id", proyek.getId());
-       
-       // add variabel nama proyek ke 'Nama' untuk dirender di thymeleaf
-       model.addAttribute("Nama", proyek.getNama());
+        if(proyekService.validateTanggal(proyekDTO.getTanggalMulai(), proyekDTO.getTanggalSelesai())) {
 
-        return "success-add-proyek";
+            // Generate UUID baru untuk proyek
+            UUID idProyek = UUID.randomUUID();
+        
+            // Membuat objek proyek baru dengan data dari DTO
+           var proyek = new Proyek(idProyek, proyekDTO.getNama(), proyekDTO.getDeskripsi(), proyekDTO.getKlien(), proyekDTO.getTanggalMulai(), 
+           proyekDTO.getTanggalSelesai(), proyekDTO.getStatus(), proyekDTO.getDeveloper());
+    
+           // add variabel id proyek ke 'id' untuk dirender di thymeleaf
+           model.addAttribute("id", proyek.getId());
+           
+           // add variabel nama proyek ke 'Nama' untuk dirender di thymeleaf
+           model.addAttribute("Nama", proyek.getNama());
+    
+            isValid = true;
+        } else {
+            model.addAttribute("message", "Tanggal Selesai harus lebih dari Tanggal Mulai.");
+            isValid = false;
+        }
+
+        long millis = System.currentTimeMillis();
+        Date currentDate = new Date(millis);
+
+        if (proyekDTO.getTanggalSelesai().equals(currentDate) || proyekDTO.getTanggalSelesai().before(currentDate)) {
+            if (proyekDTO.getStatus() == 0) {
+                model.addAttribute("message", "Proyek seharusnya sudah selesai");
+                isValid = false;
+            }
+        } else {
+            if (proyekDTO.getStatus() == 1) {
+                model.addAttribute("message", "Proyek seharusnya belum selesai");
+                isValid = false;
+            }
+        }
+
+        if (isValid == true) {
+             // Generate UUID baru untuk proyek
+             UUID idProyek = UUID.randomUUID();
+        
+             // Membuat objek proyek baru dengan data dari DTO
+            var proyek = new Proyek(idProyek, proyekDTO.getNama(), proyekDTO.getDeskripsi(), proyekDTO.getKlien(), proyekDTO.getTanggalMulai(), 
+            proyekDTO.getTanggalSelesai(), proyekDTO.getStatus(), proyekDTO.getDeveloper());
+            
+            // Memanggil service untuk menambahkan proyek
+            proyekService.createProyek(proyek);
+
+            // add variabel id proyek ke 'id' untuk dirender di thymeleaf
+           model.addAttribute("id", proyek.getId());
+           
+           // add variabel nama proyek ke 'Nama' untuk dirender di thymeleaf
+           model.addAttribute("Nama", proyek.getNama());
+            return "success-add-proyek.html";
+        }
+        return "error-view";
+       
     }
 
     @GetMapping("/proyek/viewall")
@@ -69,7 +111,7 @@ public class ProyekController {
         return "viewall-proyek";
     }
 
-    @GetMapping("/proyek/")
+    @GetMapping("/proyek")
     public String detailProyek(@RequestParam("id") String id, Model model) {
         // Mengambil proyek berdasarkan id
         var proyek = proyekService.getProyekById(UUID.fromString(id));
@@ -80,6 +122,51 @@ public class ProyekController {
         return "view-proyek";
     }
 
+    @GetMapping("/proyek/{id}/update")
+    public String updateProyek(@PathVariable("id") UUID id, Model model) {
+        // Mengambil proyek berdasarkan id
+        var proyek = proyekService.getProyekById(id);
 
+        // Membuat DTO baru sebagai isian form pengguna
+        var proyekDTO = new ProyekDTO(proyek.getId(), proyek.getNama(), proyek.getDeskripsi(), proyek.getKlien(), proyek.getTanggalMulai(), 
+        proyek.getTanggalSelesai(), proyek.getStatus(), proyek.getDeveloper());
 
+        model.addAttribute("proyekDTO", proyekDTO);
+        model.addAttribute("id", id);
+
+        return "form-update-proyek";
+    }
+
+    @PostMapping("/proyek/update")
+    public String processUpdateProyek(@ModelAttribute ProyekDTO proyekDTO, Model model) {
+        if(proyekService.validateTanggal(proyekDTO.getTanggalMulai(), proyekDTO.getTanggalSelesai())) {
+           // Mendapatkan buku berdasarkan ID
+            var proyek = proyekService.getProyekById(proyekDTO.getId());
+
+            // Mengubah data proyek dengan data baru dari DTO
+            proyek.setNama(proyekDTO.getNama());
+            proyek.setTanggalMulai(proyekDTO.getTanggalMulai());
+            proyek.setTanggalSelesai(proyekDTO.getTanggalSelesai());
+            proyek.setStatus(proyekDTO.getStatus());
+            proyek.setDeveloper(proyekDTO.getDeveloper());
+            
+            // Memanggil service untuk menyimpan perubahan
+            proyekService.updateProyek(proyek);
+
+            model.addAttribute("id", proyek.getId());
+
+            return "success-update";
+        }
+    
+        return "error-view";
+    }
+
+    @GetMapping("/proyek/{id}/delete")
+    public String deleteBuku(@PathVariable("id") UUID id) {
+       
+        // Menghapus proyek berdasarkan ID
+        proyekService.deleteProyek(id);
+        
+        return "success-delete";
+    }
 }
