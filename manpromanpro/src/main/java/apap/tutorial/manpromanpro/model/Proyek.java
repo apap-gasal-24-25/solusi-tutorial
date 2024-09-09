@@ -6,6 +6,15 @@ import java.util.UUID;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Proyek {
+
+    public enum StatusProyek{
+        PERENCANAAN,
+        EKSEKUSI,
+        SELESAI,
+        DITUNDA,
+        BATAL;
+    }
+
     private UUID id;
     private String nama;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

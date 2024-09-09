@@ -32,6 +32,7 @@
                         <br><br>
     
                         Status: <br>
+<<<<<<< HEAD
                         <td>
                           <select th:field="*{status}" class="form-control">
                             <option th:value=0>On Going</option>
@@ -39,6 +40,12 @@
                           </select>
                         </td>
                         <!-- <input required class="form-control" type="text" th:field="*{status}"/>  -->
+=======
+                        <select required class="form-control" th:field="*{status}">
+                          <option th:each="status : ${T(apap.tutorial.manpromanpro.model.Proyek.StatusProyek).values()}" 
+                                th:value="${status}" th:text="${status}"></option>
+                        </select>
+>>>>>>> f621d942bfa94463cf3659f39f8b0db51b3c13e6
                         <br><br>
 
                         Developer: <br>

@@ -3,7 +3,6 @@ package apap.tutorial.manpromanpro.controller.DTO;
 import java.sql.Date;
 import java.util.UUID;
 
-
 public class ProyekDTO {
     private UUID id;
     private String nama;

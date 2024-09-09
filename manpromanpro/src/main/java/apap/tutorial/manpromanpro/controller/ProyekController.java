@@ -17,7 +17,7 @@ import apap.tutorial.manpromanpro.service.ProyekService;
 
 @Controller
 public class ProyekController {
-    
+
     @Autowired
     private ProyekService proyekService;
 
