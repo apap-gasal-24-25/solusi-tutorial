@@ -8,8 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Proyek {
     private UUID id;
     private String nama;
-    private String deskripsi;
-    private String klien;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date tanggalMulai;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -18,12 +16,10 @@ public class Proyek {
     private String developer;
     
 
-    public Proyek(UUID id, String nama, String deskripsi, String klien, Date tanggalMulai, Date tanggalSelesai, Integer status,
+    public Proyek(UUID id, String nama, Date tanggalMulai, Date tanggalSelesai, Integer status,
             String developer) {
         this.id = id;
         this.nama = nama;
-        this.deskripsi = deskripsi;
-        this.klien = klien;
         this.tanggalMulai = tanggalMulai;
         this.tanggalSelesai = tanggalSelesai;
         this.status = status;
@@ -41,22 +37,6 @@ public class Proyek {
     }
     public void setNama(String nama) {
         this.nama = nama;
-    }
-    
-    public String getDeskripsi() {
-        return deskripsi;
-    }
-
-    public void setDeskripsi(String deskripsi) {
-        this.deskripsi = deskripsi;
-    }
-
-    public String getKlien() {
-        return klien;
-    }
-
-    public void setKlien(String klien) {
-        this.klien = klien;
     }
 
     public Date getTanggalMulai() {

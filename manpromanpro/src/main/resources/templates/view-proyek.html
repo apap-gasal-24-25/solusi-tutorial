@@ -24,10 +24,6 @@
                     <div>
                         <p class="card-text m-0"><b>ID Proyek</b></p>
                         <p class="card-text" th:text="${proyek.id}"></p>
-                        <p class="card-text m-0"><b>Deskripsi Proyek</b></p>
-                        <p class="card-text" th:text="${proyek.deskripsi}"></p>
-                        <p class="card-text m-0"><b>Klien</b></p>
-                        <p class="card-text" th:text="${proyek.klien}"></p>
                         <p class="card-text m-0"><b>Tanggal Mulai</b></p>
                         <p class="card-text" th:text="${#dates.format(proyek.tanggalMulai, 'dd MMMM yyyy')}"></p>
                         <p class="card-text m-0"><b>Tanggal Selesai</b></p>
