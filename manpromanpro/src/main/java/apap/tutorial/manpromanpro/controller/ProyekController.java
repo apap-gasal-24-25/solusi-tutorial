@@ -3,23 +3,29 @@ package apap.tutorial.manpromanpro.controller;
 import java.util.List;
 import java.util.UUID;
 
+import apap.tutorial.manpromanpro.dto.ProyekMapper;
+import apap.tutorial.manpromanpro.dto.request.UpdateProyekRequestDTO;
+import apap.tutorial.manpromanpro.service.DeveloperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import apap.tutorial.manpromanpro.controller.DTO.ProyekDTO;
+import apap.tutorial.manpromanpro.dto.request.CreateProyekRequestDTO;
 import apap.tutorial.manpromanpro.model.Proyek;
 import apap.tutorial.manpromanpro.service.ProyekService;
 
 @Controller
 public class ProyekController {
+
+    @Autowired
+    private ProyekMapper proyekMapper;
     
     @Autowired
     private ProyekService proyekService;
+
+    @Autowired
+    private DeveloperService developerService;
 
     @GetMapping("/")
     private String home() {
@@ -28,32 +34,21 @@ public class ProyekController {
 
     @GetMapping("/proyek/add")
     public String addProyekForm(Model model) {
-        // Membuat DTO baru sebagai isian form pengguna
-        var proyekDTO = new ProyekDTO();
+
+        var proyekDTO = new CreateProyekRequestDTO();
 
         model.addAttribute("proyekDTO", proyekDTO);
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
 
         return "form-add-proyek";
     }
 
     @PostMapping("/proyek/add")
-    public String addProyek(@ModelAttribute ProyekDTO proyekDTO, Model model) {
-        
-        // Generate UUID baru untuk proyek
-        UUID idProyek = UUID.randomUUID();
-        
-        // Membuat objek proyek baru dengan data dari DTO
-       var proyek = new Proyek(idProyek, proyekDTO.getNama(), proyekDTO.getTanggalMulai(), 
-       proyekDTO.getTanggalSelesai(), proyekDTO.getStatus(), proyekDTO.getDeveloper());
-       
-       // Memanggil service untuk menambahkan proyek
-       proyekService.createProyek(proyek);
+    public String addProyek(@ModelAttribute CreateProyekRequestDTO proyekDTO, Model model) {
+        var proyek = proyekMapper.createProyekRequestDTOToProyek(proyekDTO);
 
-       // add variabel id proyek ke 'id' untuk dirender di thymeleaf
-       model.addAttribute("id", proyek.getId());
-       
-       // add variabel nama proyek ke 'Nama' untuk dirender di thymeleaf
-       model.addAttribute("Nama", proyek.getNama());
+        model.addAttribute("id", proyek.getId());
+        model.addAttribute("Nama", proyek.getNama());
 
         return "success-add-proyek";
     }
@@ -80,6 +75,35 @@ public class ProyekController {
         return "view-proyek";
     }
 
+    @GetMapping("/proyek/update/{id}")
+    public String updateProyek(@PathVariable("id") String id, Model model) {
+        var proyek = proyekService.getProyekById(UUID.fromString(id));
 
+        var proyekDTO = proyekMapper.proyekToUpdateProyekRequestDTO(proyek);
+
+        model.addAttribute("proyekDTO", proyekDTO);
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+
+        return "form-update-proyek";
+    }
+
+    @PostMapping("/proyek/update")
+    public String updateProyek(@ModelAttribute UpdateProyekRequestDTO proyekDTO, Model model) {
+        var proyekFromDTO = proyekMapper.updateProyekRequestDTOToProyek(proyekDTO);
+        var proyek = proyekService.updateProyek(proyekFromDTO);
+
+        model.addAttribute("id", proyek.getId());
+        model.addAttribute("Nama", proyek.getNama());
+
+        return "success-update-proyek";
+    }
+
+    @GetMapping("/proyek/delete/{id}")
+    public String deleteProyek(@PathVariable("id") UUID id, Model model) {
+        var proyek = proyekService.getProyekById(id);
+        proyekService.deleteProyek(proyek);
+        model.addAttribute("id", proyek.getId());
+        return "success-delete-proyek";
+    }
 
 }

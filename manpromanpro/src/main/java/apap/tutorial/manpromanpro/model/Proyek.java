@@ -1,60 +1,50 @@
 package apap.tutorial.manpromanpro.model;
 
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
-public class Proyek {
-    private UUID id;
-    private String nama;
-    private String tanggalMulai;
-    private String tanggalSelesai;
-    private String status;
-    private String developer;
-    
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-    public Proyek(UUID id, String nama, String tanggalMulai, String tanggalSelesai, String status,
-            String developer) {
-        this.id = id;
-        this.nama = nama;
-        this.tanggalMulai = tanggalMulai;
-        this.tanggalSelesai = tanggalSelesai;
-        this.status = status;
-        this.developer = developer;
-    }
-    
-    public UUID getId() {
-        return id;
-    }
-    public void setId(UUID id) {
-        this.id = id;
-    }
-    public String getNama() {
-        return nama;
-    }
-    public void setNama(String nama) {
-        this.nama = nama;
-    }
-    public String getTanggalMulai() {
-        return tanggalMulai;
-    }
-    public void setTanggalMulai(String tanggalMulai) {
-        this.tanggalMulai = tanggalMulai;
-    }
-    public String getTanggalSelesai() {
-        return tanggalSelesai;
-    }
-    public void setTanggalSelesai(String tanggalSelesai) {
-        this.tanggalSelesai = tanggalSelesai;
-    }
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    public String getDeveloper() {
-        return developer;
-    }
-    public void setDeveloper(String developer) {
-        this.developer = developer;
-    }
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "proyek")
+public class Proyek {
+    @Id
+    private UUID id = UUID.randomUUID();
+
+    @NotNull
+    @Size(max = 30)
+    @Column(name = "nama", nullable = false)
+    private String nama;
+
+    @NotNull
+    @Column(name = "tanggal_mulai", nullable = false)
+    private Date tanggalMulai;
+
+    @NotNull
+    @Column(name = "tanggal_selesai", nullable = false)
+    private Date tanggalSelesai;
+
+    @NotNull
+    @Column(name = "status", nullable = false)
+    private String status;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_developer", referencedColumnName = "id")
+    private Developer developer;
+
+    @ManyToMany
+    @JoinTable(name = "pekerja_proyek", joinColumns = @JoinColumn(name = "id_proyek"),
+            inverseJoinColumns = @JoinColumn(name = "id_pekerja"))
+    List<Pekerja> listPekerja;
 }
