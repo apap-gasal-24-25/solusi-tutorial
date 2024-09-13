@@ -22,7 +22,7 @@ public class ManpromanproApplication {
 		SpringApplication.run(ManpromanproApplication.class, args);
 	}
 
-//	@Bean
+//	@Bean./grad
 //	@Transactional
 //	CommandLineRunner run(ProyekService proyekService, DeveloperService developerService) {
 //		return args -> {
