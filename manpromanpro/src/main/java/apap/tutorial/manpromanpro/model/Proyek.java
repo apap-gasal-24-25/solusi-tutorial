@@ -19,6 +19,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
@@ -27,6 +29,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @AllArgsConstructor
 @Entity
 @Table(name = "proyek")
+@SQLDelete(sql = "UPDATE proyek SET is_deleted = true WHERE id=?")
 public class Proyek {
     @Id
     private UUID id = UUID.randomUUID();
@@ -63,4 +66,8 @@ public class Proyek {
     @JoinTable(name = "pekerja_proyek", joinColumns = @JoinColumn(name = "id_proyek"),
             inverseJoinColumns = @JoinColumn(name = "id_pekerja"))
     List<Pekerja> listPekerja;
+
+    @NotNull
+    @Column(name = "is_deleted", nullable = false)
+    private boolean isDeleted = false;
 }
