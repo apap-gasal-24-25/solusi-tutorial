@@ -5,7 +5,7 @@ import apap.tutorial.manpromanpro.model.Developer;
 import java.util.List;
 
 public interface DeveloperService {
-    Developer createDeveloper(Developer developer);
+    Developer addDeveloper(Developer developer);
     List<Developer> getAllDeveloper();
-    Developer getDeveloperById(Long id);
+    Developer getDeveloperById(Long idDeveloper);
 }

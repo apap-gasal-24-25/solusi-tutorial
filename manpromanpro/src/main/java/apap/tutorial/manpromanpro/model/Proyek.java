@@ -4,13 +4,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
@@ -28,14 +37,21 @@ public class Proyek {
     private String nama;
 
     @NotNull
-    @Column(name = "tanggal_mulai", nullable = false)
+    @Column(name = "deskripsi", columnDefinition = "TEXT", nullable = false)
+    private String deskripsi;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
+    @Column(name = "tanggal_mulai", columnDefinition = "DATE", nullable = false)
     private Date tanggalMulai;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
-    @Column(name = "tanggal_selesai", nullable = false)
+    @Column(name = "tanggal_selesai", columnDefinition = "DATE", nullable = false)
     private Date tanggalSelesai;
 
     @NotNull
+    @Size(max = 30)
     @Column(name = "status", nullable = false)
     private String status;
 

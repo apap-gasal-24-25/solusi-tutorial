@@ -28,14 +28,14 @@ public class Developer {
     private String nama;
 
     @NotNull
-    @Lob
-    @Column(name = "alamat", nullable = false)
+    @Column(name = "alamat", columnDefinition = "TEXT", nullable = false)
     private String alamat;
 
     @NotNull
-    @Column(name = "tanggal_berdiri", nullable = false)
+    @Column(name = "tanggal_berdiri", columnDefinition = "DATE", nullable = false)
     private Date tanggalBerdiri;
 
+    @Size(max = 30)
     @NotNull
     @Column(name = "email", nullable = false)
     private String email;

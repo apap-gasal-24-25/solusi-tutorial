@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.List;
 
@@ -31,14 +32,14 @@ public class Pekerja {
     @Column(name = "usia", nullable = false)
     private int usia;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     @Size(max = 30)
     @Column(name = "pekerjaan", nullable = false)
     private String pekerjaan;
 
     @NotNull
-    @Lob
-    @Column(name = "biografi", nullable = false)
+    @Column(name = "biografi", columnDefinition = "TEXT", nullable = false)
     private String biografi;
 
     @ManyToMany

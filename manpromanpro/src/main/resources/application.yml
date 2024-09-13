@@ -2,9 +2,9 @@ spring:
   application:
     name: manpromanpro
   datasource:
-    url: jdbc:postgresql://localhost:15001/manpromanpro
+    url: jdbc:postgresql://localhost:9010/manpromanpro
     username: postgres
-    password: secret99
+    password: postgres
   jpa:
     properties:
       hibernate:
@@ -13,4 +13,4 @@ spring:
             non_contextual_creation: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update

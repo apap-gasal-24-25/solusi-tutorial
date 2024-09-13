@@ -15,8 +15,8 @@ public class ProyekServiceImpl implements ProyekService {
     ProyekDb proyekDb;
 
     @Override
-    public void createProyek(Proyek proyek) {
-        proyekDb.save(proyek);
+    public Proyek addProyek(Proyek proyek) {
+        return proyekDb.save(proyek);
     }
 
     @Override
@@ -43,6 +43,8 @@ public class ProyekServiceImpl implements ProyekService {
             getProyek.setTanggalSelesai(proyek.getTanggalSelesai());
             getProyek.setStatus(proyek.getStatus());
             proyekDb.save(getProyek);
+
+            return getProyek;
         }
 
         return null;

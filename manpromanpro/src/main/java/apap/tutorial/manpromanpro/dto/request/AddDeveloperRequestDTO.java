@@ -3,16 +3,18 @@ package apap.tutorial.manpromanpro.dto.request;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CreateProyekRequestDTO {
+public class AddDeveloperRequestDTO {
     private String nama;
-    private Date tanggalMulai;
-    private Date tanggalSelesai;
-    private String status;
+    private String alamat;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date tanggalBerdiri;
+    private String email;
 }
 

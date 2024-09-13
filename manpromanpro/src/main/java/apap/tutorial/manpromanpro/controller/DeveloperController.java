@@ -1,9 +1,6 @@
 package apap.tutorial.manpromanpro.controller;
 
-import apap.tutorial.manpromanpro.dto.DeveloperMapper;
-import apap.tutorial.manpromanpro.dto.request.CreateDeveloperRequestDTO;
-import apap.tutorial.manpromanpro.service.DeveloperService;
-import apap.tutorial.manpromanpro.service.ProyekService;
+import apap.tutorial.manpromanpro.model.Developer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +9,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import apap.tutorial.manpromanpro.dto.request.AddDeveloperRequestDTO;
+import apap.tutorial.manpromanpro.service.DeveloperService;
+import apap.tutorial.manpromanpro.service.ProyekService;
+
 @Controller
 public class DeveloperController {
-    @Autowired
-    DeveloperMapper developerMapper;
 
     @Autowired
     DeveloperService developerService;
@@ -23,20 +22,28 @@ public class DeveloperController {
     @Autowired
     ProyekService proyekService;
 
-    @GetMapping("/developer/create")
+    @GetMapping("/developer/add")
     public String formAddDeveloper(Model model) {
-        var developerDTO = new CreateDeveloperRequestDTO();
+        var developerDTO = new AddDeveloperRequestDTO();
+
         model.addAttribute("developerDTO", developerDTO);
 
-        return "form-create-developer";
+        return "form-add-developer";
     }
 
-    @PostMapping("/developer/create")
-    public String addDeveloper(@ModelAttribute("developerDTO") CreateDeveloperRequestDTO developerDTO, Model model) {
-        var developer = developerMapper.createDeveloperRequestDTOToDeveloper(developerDTO);
+    @PostMapping("/developer/add")
+    public String addDeveloper(@ModelAttribute("developerDTO") AddDeveloperRequestDTO developerDTO, Model model) {
+        var developer = new Developer();
+        developer.setNama(developerDTO.getNama());
+        developer.setAlamat(developerDTO.getAlamat());
+        developer.setTanggalBerdiri(developerDTO.getTanggalBerdiri());
+        developer.setEmail(developerDTO.getEmail());
 
-        model.addAttribute("developer", developer);
-        return "form-create-developer";
+        developerService.addDeveloper(developer);
+
+        model.addAttribute("responseMessage",
+                String.format("Developer %s dengan ID %s berhasil ditambahkan.", developer.getNama(), developer.getId()));
+        return "response-developer";
     }
 
     @GetMapping("/developer/viewall")
