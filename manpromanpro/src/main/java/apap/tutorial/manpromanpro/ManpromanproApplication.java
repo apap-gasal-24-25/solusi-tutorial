@@ -28,15 +28,15 @@ public class ManpromanproApplication {
 		return args -> {
 			var faker = new Faker(new Locale("in-ID"));
 
-			var proyek = new Proyek();
-			var fakeProyek = faker.leagueOfLegends();
+			// var proyek = new Proyek();
+			// var fakeProyek = faker.leagueOfLegends();
 			var fakeDate = faker.date();
 
-			proyek.setNama(fakeProyek.champion());
-			proyek.setDeskripsi(fakeProyek.quote());
-			proyek.setTanggalMulai(fakeDate.past(2, TimeUnit.DAYS));
-			proyek.setTanggalSelesai(fakeDate.future(2, TimeUnit.DAYS));
-			proyek.setStatus("STARTED");
+			// proyek.setNama(fakeProyek.champion());
+			// proyek.setDeskripsi(fakeProyek.quote());
+			// proyek.setTanggalMulai(fakeDate.past(2, TimeUnit.DAYS));
+			// proyek.setTanggalSelesai(fakeDate.future(2, TimeUnit.DAYS));
+			// proyek.setStatus("STARTED");
 
 			var developer = new Developer();
 			var fakeDeveloper = faker.name();
@@ -48,9 +48,9 @@ public class ManpromanproApplication {
 			developer.setEmail("fakedeveloper@test.com");
 
 			var newDeveloper = developerService.addDeveloper(developer);
-			proyek.setDeveloper(newDeveloper);
+			// proyek.setDeveloper(newDeveloper);
 
-			proyekService.addProyek(proyek);
+			// proyekService.addProyek(proyek);
 		};
 	}
 }
