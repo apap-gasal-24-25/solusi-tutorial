@@ -52,6 +52,18 @@
                     <p class="card-text col-sm-8" th:if="${proyek.developer == null}">-</p>
                 </div>
 
+                <div class="row my-3">
+                    <p class="card-text fw-bold col-sm-3">Waktu Dibentuk</p>
+                    <p class="card-text fw-bold col-sm-1" style="width: 2%">:</p>
+                    <p class="card-text col-sm-8" th:text="${#dates.format(proyek.createdAt, 'dd MMMM yyyy HH.mm')}"></p>
+                </div>
+
+                <div class="row my-3">
+                    <p class="card-text fw-bold col-sm-3">Terakhir Diubah</p>
+                    <p class="card-text fw-bold col-sm-1" style="width: 2%">:</p>
+                    <p class="card-text col-sm-8" th:text="${#dates.format(proyek.updatedAt, 'dd MMMM yyyy HH.mm')}"></p>
+                </div>
+
                 <div class="text-center m-3">
                     <a type="button" class="btn btn-primary btn-md" href="/proyek/viewall">Kembali</a>
                 </div>
