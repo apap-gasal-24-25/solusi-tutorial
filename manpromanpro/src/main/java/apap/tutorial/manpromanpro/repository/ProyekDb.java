@@ -9,5 +9,11 @@ import java.util.List;
 
 @Repository
 public interface ProyekDb extends JpaRepository<Proyek, UUID> {
-    List<Proyek> findAllByIsDeletedFalse();
+    List<Proyek> findAllByOrderByNama();   
+
+    List<Proyek> findByNamaContainsIgnoreCaseOrderByNama(String nama);  
+    
+    List<Proyek> findByStatusOrderByNama(String status);  
+
+    List<Proyek> findByNamaContainsIgnoreCaseAndStatusOrderByNama(String nama, String status); 
 }
