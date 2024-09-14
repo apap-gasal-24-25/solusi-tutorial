@@ -21,7 +21,7 @@ public class ProyekServiceImpl implements ProyekService {
 
     @Override
     public List<Proyek> getAllProyek() {
-        return proyekDb.findAllByIsDeletedFalse();
+        return proyekDb.findAllByIsDeletedFalseOrderByNama();
     }
 
     @Override
