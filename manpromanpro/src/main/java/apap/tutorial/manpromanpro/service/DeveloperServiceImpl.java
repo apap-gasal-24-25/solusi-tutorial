@@ -32,4 +32,20 @@ public class DeveloperServiceImpl implements DeveloperService {
         }
         return null;
     }
+
+    @Override
+    public Developer updateDeveloper(Developer developer) {
+        Developer getDeveloper = getDeveloperById(developer.getId());
+        if (getDeveloper != null) {
+            getDeveloper.setNama(developer.getNama());
+            getDeveloper.setAlamat(developer.getAlamat());
+            getDeveloper.setTanggalBerdiri(developer.getTanggalBerdiri());
+            getDeveloper.setEmail(developer.getEmail());
+            developerDb.save(getDeveloper);
+
+            return getDeveloper;
+        }
+
+        return null;
+    }
 }

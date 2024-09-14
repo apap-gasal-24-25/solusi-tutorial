@@ -8,4 +8,5 @@ public interface DeveloperService {
     Developer addDeveloper(Developer developer);
     List<Developer> getAllDeveloper();
     Developer getDeveloperById(Long idDeveloper);
+    Developer updateDeveloper(Developer developer);
 }
