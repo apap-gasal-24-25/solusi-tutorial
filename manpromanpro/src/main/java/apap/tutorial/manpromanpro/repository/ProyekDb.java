@@ -9,7 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ProyekDb extends JpaRepository<Proyek, UUID> {
-    List<Proyek> findAllByIsDeletedFalseOrderByNama();
-
-    
+    List<Proyek> findAllByOrderByNama();   
 }

@@ -1,9 +1,6 @@
 package apap.tutorial.manpromanpro.controller;
 
 import apap.tutorial.manpromanpro.model.Developer;
-import apap.tutorial.manpromanpro.model.Proyek;
-
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import apap.tutorial.manpromanpro.controller.ProyekController.StatusLevel;
 import apap.tutorial.manpromanpro.dto.request.AddDeveloperRequestDTO;
 import apap.tutorial.manpromanpro.dto.request.UpdateDeveloperRequestDTO;
-import apap.tutorial.manpromanpro.dto.request.UpdateProyekRequestDTO;
 import apap.tutorial.manpromanpro.service.DeveloperService;
 import apap.tutorial.manpromanpro.service.ProyekService;
 

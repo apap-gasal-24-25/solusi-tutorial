@@ -25,6 +25,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.SQLRestriction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
@@ -33,7 +34,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @AllArgsConstructor
 @Entity
 @Table(name = "proyek")
-@SQLDelete(sql = "UPDATE proyek SET is_deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE proyek SET deleted_at = NOW() WHERE id=?")
+@SQLRestriction("deleted_at IS NULL")
 public class Proyek {
     @Id
     private UUID id = UUID.randomUUID();
@@ -81,7 +83,6 @@ public class Proyek {
     @Column(name = "updated_at", nullable = false)
     private Date updatedAt;
 
-    @NotNull
-    @Column(name = "is_deleted", nullable = false)
-    private boolean isDeleted = false;
+    @Column(name = "deleted_at")
+    private Date deletedAt;
 }
