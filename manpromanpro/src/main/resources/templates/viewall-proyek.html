@@ -19,11 +19,11 @@
             <div class="col-md-6">
                 <form class="d-flex" action="/proyek/viewall" method="GET">
                     <div class="col-md-8 me-2">
-                        <input class="form-control" type="search" placeholder="Cari proyek..." aria-label="Search" name="nama">
+                        <input class="form-control" type="search" placeholder="Cari nama proyek.." aria-label="Search" name="nama">
                     </div>
                     <div class="col-md-3 me-2">
                         <select class="form-select" name="status"> 
-                            <option value="" disabled selected>Status Proyek...</option>
+                            <option value="" disabled selected>Status</option>
                             <option th:each="status : ${statusLevel}" th:value="${status}" th:text="${status}"></option>
                         </select>
                     </div>
