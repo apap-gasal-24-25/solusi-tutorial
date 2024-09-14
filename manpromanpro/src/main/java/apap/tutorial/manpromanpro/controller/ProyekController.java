@@ -3,6 +3,7 @@ package apap.tutorial.manpromanpro.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import apap.tutorial.manpromanpro.dto.request.AddProyekRequestDTO;
 import apap.tutorial.manpromanpro.dto.request.UpdateProyekRequestDTO;
@@ -27,7 +29,7 @@ public class ProyekController {
     private DeveloperService developerService;
 
     enum StatusLevel {
-        START,
+        STARTED,
         ONGOING,
         FINISHED,
     }
@@ -70,10 +72,29 @@ public class ProyekController {
     }
 
     @GetMapping("/proyek/viewall")
-    public String listProyek(Model model) {
-        List<Proyek> listProyek = proyekService.getAllProyek();
+    public String listProyek(
+            @RequestParam(value = "nama", required = false) String searchNama, 
+            @RequestParam(value = "status", required = false) String searchStatus, 
+            Model model) {
+
+        List<Proyek> listProyek;
+
+        if (StringUtils.isBlank(searchNama) && StringUtils.isBlank(searchStatus)) {
+            // Jika search field kosong, tampilkan semuanya
+            listProyek = proyekService.getAllProyek();
+        } else if (!StringUtils.isBlank(searchNama) && !StringUtils.isBlank(searchStatus)){
+            // Search menggunakan nama dan status
+            listProyek = proyekService.getProyekByNamaAndStatus(searchNama, searchStatus);
+        } else if (!StringUtils.isBlank(searchNama)) {
+            // Search menggunakan nama
+            listProyek = proyekService.getProyekByNama(searchNama);
+        } else {
+            // Search menggunakan status
+            listProyek = proyekService.getProyekByStatus(searchStatus);
+        }
 
         model.addAttribute("listProyek", listProyek);
+        model.addAttribute("statusLevel", StatusLevel.values());
 
         return "viewall-proyek";
     }

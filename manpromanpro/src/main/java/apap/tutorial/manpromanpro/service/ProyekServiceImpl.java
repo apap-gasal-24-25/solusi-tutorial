@@ -57,4 +57,19 @@ public class ProyekServiceImpl implements ProyekService {
         proyekDb.delete(proyek);
     }
 
+    @Override
+    public List<Proyek> getProyekByNama(String nama) {
+        return proyekDb.findByNamaContainsIgnoreCaseOrderByNama(nama);
+    }
+
+    @Override
+    public List<Proyek> getProyekByStatus(String status) {
+        return proyekDb.findByStatusOrderByNama(status);
+    }
+
+    @Override
+    public List<Proyek> getProyekByNamaAndStatus(String nama, String status) {
+       return proyekDb.findByNamaContainsIgnoreCaseAndStatusOrderByNama(nama, status);
+    }
+
 }

@@ -14,6 +14,28 @@
         <div class="text-center my-4">
             <h2>Daftar Proyek</h2>
         </div>
+
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6">
+                <form class="d-flex" action="/proyek/viewall" method="GET">
+                    <div class="col-md-8 me-2">
+                        <input class="form-control" type="search" placeholder="Cari proyek..." aria-label="Search" name="nama">
+                    </div>
+                    <div class="col-md-3 me-2">
+                        <select class="form-select" name="status"> 
+                            <option value="" disabled selected>Status Proyek...</option>
+                            <option th:each="status : ${statusLevel}" th:value="${status}" th:text="${status}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div th:each="proyek: ${listProyek}">
             <div class="row justify-content-center m-2">
                 <div class="card" style="width: 40rem;">
