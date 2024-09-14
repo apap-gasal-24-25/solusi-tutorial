@@ -16,6 +16,4 @@ public interface ProyekDb extends JpaRepository<Proyek, UUID> {
     List<Proyek> findByStatusOrderByNama(String status);  
 
     List<Proyek> findByNamaContainsIgnoreCaseAndStatusOrderByNama(String nama, String status); 
-
-
 }

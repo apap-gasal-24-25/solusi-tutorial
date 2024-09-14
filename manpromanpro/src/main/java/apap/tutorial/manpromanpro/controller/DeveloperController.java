@@ -92,7 +92,7 @@ public class DeveloperController {
         var developer = developerService.updateDeveloper(developerFromDTO);
 
         model.addAttribute("responseMessage",
-                String.format("Developer %s berhasil diupdate.", developer.getNama()));
+                String.format("Developer dengan ID %s berhasil diupdate.", developer.getId()));
 
         return "response-developer";
     }
