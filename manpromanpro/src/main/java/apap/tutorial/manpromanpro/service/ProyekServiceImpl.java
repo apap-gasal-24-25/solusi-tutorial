@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import apap.tutorial.manpromanpro.repository.ProyekDb;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import apap.tutorial.manpromanpro.model.Proyek;
@@ -21,7 +22,7 @@ public class ProyekServiceImpl implements ProyekService {
 
     @Override
     public List<Proyek> getAllProyek() {
-        return proyekDb.findAllByOrderByNama();
+        return proyekDb.findAll(Sort.by(Sort.Order.asc("nama").ignoreCase()));
     }
 
     @Override
@@ -59,17 +60,17 @@ public class ProyekServiceImpl implements ProyekService {
 
     @Override
     public List<Proyek> getProyekByNama(String nama) {
-        return proyekDb.findByNamaContainsIgnoreCaseOrderByNama(nama);
+        return proyekDb.findByNamaContainingIgnoreCase(nama, Sort.by(Sort.Order.asc("nama").ignoreCase()));
     }
 
     @Override
     public List<Proyek> getProyekByStatus(String status) {
-        return proyekDb.findByStatusOrderByNama(status);
+        return proyekDb.findByStatus(status, Sort.by(Sort.Order.asc("nama").ignoreCase()));
     }
 
     @Override
     public List<Proyek> getProyekByNamaAndStatus(String nama, String status) {
-       return proyekDb.findByNamaContainsIgnoreCaseAndStatusOrderByNama(nama, status);
+       return proyekDb.findByNamaContainingIgnoreCaseAndStatus(nama, status, Sort.by(Sort.Order.asc("nama").ignoreCase()));
     }
 
 }

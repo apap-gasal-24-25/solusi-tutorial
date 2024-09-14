@@ -113,6 +113,8 @@ public class ProyekController {
 
         model.addAttribute("listProyek", listProyek);
         model.addAttribute("statusLevel", StatusLevel.values());
+        model.addAttribute("searchNama", searchNama );
+        model.addAttribute("searchStatus", searchStatus );
 
         return "viewall-proyek";
     }

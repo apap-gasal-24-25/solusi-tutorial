@@ -1,6 +1,7 @@
 package apap.tutorial.manpromanpro.repository;
 
 import apap.tutorial.manpromanpro.model.Proyek;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,11 +10,11 @@ import java.util.List;
 
 @Repository
 public interface ProyekDb extends JpaRepository<Proyek, UUID> {
-    List<Proyek> findAllByOrderByNama();   
+    List<Proyek> findAll(Sort sort);
 
-    List<Proyek> findByNamaContainsIgnoreCaseOrderByNama(String nama);  
+    List<Proyek> findByNamaContainingIgnoreCase(String nama, Sort sort);
     
-    List<Proyek> findByStatusOrderByNama(String status);  
+    List<Proyek> findByStatus(String status, Sort sort);
 
-    List<Proyek> findByNamaContainsIgnoreCaseAndStatusOrderByNama(String nama, String status); 
+    List<Proyek> findByNamaContainingIgnoreCaseAndStatus(String nama, String status, Sort sort);
 }
