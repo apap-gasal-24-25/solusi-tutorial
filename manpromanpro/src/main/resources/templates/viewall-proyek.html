@@ -23,7 +23,6 @@
                     </div>
                     <div class="col-md-3 me-2">
                         <select class="form-select" name="status"> 
-                            <option value="" disabled selected>Status</option>
                             <option value="" th:selected="${searchStatus == null || searchStatus == ''}" >Semua Status</option>
                             <option th:each="status : ${statusLevel}" th:value="${status}" th:text="${status}"
                                     th:selected="${status.name()} == ${searchStatus}"
