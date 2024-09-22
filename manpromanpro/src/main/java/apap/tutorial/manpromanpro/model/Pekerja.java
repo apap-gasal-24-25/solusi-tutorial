@@ -7,9 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Setter
 @Getter
@@ -24,7 +25,7 @@ public class Pekerja {
     private Long id;
 
     @NotNull
-    @Size(max = 30)
+    @Size(max = 50)
     @Column(name = "nama", nullable = false)
     private String nama;
 
@@ -32,16 +33,15 @@ public class Pekerja {
     @Column(name = "usia", nullable = false)
     private int usia;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     @Size(max = 30)
     @Column(name = "pekerjaan", nullable = false)
     private String pekerjaan;
 
-    @NotNull
-    @Column(name = "biografi", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "biografi", columnDefinition = "TEXT")
     private String biografi;
 
-    @ManyToMany
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "listPekerja", fetch = FetchType.LAZY)
     List<Proyek> listProyek;
 }

@@ -25,7 +25,7 @@ public class AddProyekRequestDTO {
     private Date tanggalMulai;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @FutureOrPresent(message = "Tanggal selesai proyek minimal adalah hari ini")
+    @FutureOrPresent(message = "Tanggal selesai pro yek minimal adalah hari ini")
     private Date tanggalSelesai;
 
     @NotEmpty(message = "Status proyek tidak boleh kosong")

@@ -28,6 +28,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -66,11 +69,13 @@ public class Proyek {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_developer", referencedColumnName = "id")
+    @JsonManagedReference
     private Developer developer;
 
     @ManyToMany
     @JoinTable(name = "pekerja_proyek", joinColumns = @JoinColumn(name = "id_proyek"),
             inverseJoinColumns = @JoinColumn(name = "id_pekerja"))
+    @JsonBackReference
     List<Pekerja> listPekerja;
 
     @CreationTimestamp
