@@ -6,11 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import apap.tutorial.manpromanpro.dto.request.AddPekerjaRequestDTO;
@@ -35,13 +35,12 @@ public class PekerjaRestController {
         return ResponseEntity.status(HttpStatus.OK).body(listPekerja);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> detailPekerja(@PathVariable("id") Long id) {
+    @GetMapping("")
+    public ResponseEntity<?> detailPekerja(@RequestParam Long id) {
         Pekerja pekerja = pekerjaService.getPekerjaById(id);
         
         return ResponseEntity.status(HttpStatus.OK).body(pekerja);
     }
-    
 
     @PostMapping("/add")
     public ResponseEntity<?> addPekerja(@Valid @RequestBody AddPekerjaRequestDTO pekerjaDTO,
@@ -74,6 +73,4 @@ public class PekerjaRestController {
         Pekerja pekerja = pekerjaService.updatePekerja(pekerjaDTO);
         return ResponseEntity.status(HttpStatus.OK).body(pekerja);
     }
-
-    
 }

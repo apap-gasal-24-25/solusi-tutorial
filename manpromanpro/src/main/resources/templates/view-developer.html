@@ -38,25 +38,24 @@
                     <p class="card-text fw-bold col-sm-1" style="width: 2%">:</p>
                     <p class="card-text col-sm-8" th:text="${developer.email}"></p>
                 </div>
-
-                <div class="row my-3">
-                    <p class="card-text fw-bold col-sm-3">Proyek Yang Dikelola</p>
-                    <p class="card-text fw-bold col-sm-1" style="width: 2%">:</p>
-                    <p class="card-text col-sm-8" th:if="${developer.listProyek == null || #lists.size(developer.listProyek) == 0}">-</p>
-                </div>
-
+                
                 <div class="row my-3">
                     <p class="card-text fw-bold col-sm-3">Waktu Dibentuk</p>
                     <p class="card-text fw-bold col-sm-1" style="width: 2%">:</p>
                     <p class="card-text col-sm-8" th:text="${#dates.format(developer.createdAt, 'dd MMMM yyyy HH.mm')}"></p>
                 </div>
-
+                
                 <div class="row my-3">
                     <p class="card-text fw-bold col-sm-3">Terakhir Diubah</p>
                     <p class="card-text fw-bold col-sm-1" style="width: 2%">:</p>
                     <p class="card-text col-sm-8" th:text="${#dates.format(developer.updatedAt, 'dd MMMM yyyy HH.mm')}"></p>
                 </div>
-
+                
+                <div class="row my-3">
+                    <p class="card-text fw-bold col-sm-3">Proyek Yang Dikelola</p>
+                    <p class="card-text fw-bold col-sm-1" style="width: 2%">:</p>
+                    <p class="card-text col-sm-8" th:if="${developer.listProyek == null || #lists.size(developer.listProyek) == 0}">-</p>
+                </div>
                 <table th:if="${developer.listProyek != null && #lists.size(developer.listProyek) > 0}" class="table my-3">
                     <thead>
                     <tr>

@@ -4,12 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-
-import apap.tutorial.manpromanpro.dto.request.AddPekerjaRequestDTO;
 import apap.tutorial.manpromanpro.dto.response.PekerjaResponseDTO;
-import apap.tutorial.manpromanpro.model.Pekerja;
 
 @Service
 public class PekerjaServiceImpl implements PekerjaService {
@@ -20,12 +15,6 @@ public class PekerjaServiceImpl implements PekerjaService {
         this.webClient = webClientBuilder
                             .baseUrl("http://localhost:8080/api")
                             .build();
-    }
-
-    @Override
-    public Pekerja addPekerja(AddPekerjaRequestDTO pekerjaDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addPekerja'");
     }
 
     @Override
@@ -43,7 +32,7 @@ public class PekerjaServiceImpl implements PekerjaService {
     public PekerjaResponseDTO getPekerjaById(Long idPekerja) {
         return webClient
                 .get()
-                .uri("/pekerja/" + idPekerja)
+                .uri("/pekerja?id=" + idPekerja)
                 .retrieve()
                 .bodyToMono(PekerjaResponseDTO.class)
                 .block();

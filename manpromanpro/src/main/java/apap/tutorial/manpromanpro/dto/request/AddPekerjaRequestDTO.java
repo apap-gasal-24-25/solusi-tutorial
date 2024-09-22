@@ -15,7 +15,6 @@ public class AddPekerjaRequestDTO {
     @Size(max = 50, message = "Nama pekerja maksimal 50 karakter")
     private String nama;
 
-    @NotNull(message = "Usia pekerja tidak boleh kosong")
     @Positive(message = "Usia pekerja harus merupakan bilangan positif")
     private int usia;
 

@@ -16,6 +16,7 @@ public class ProyekResponseDTO {
     private String deskripsi;
     private Date tanggalMulai;
     private Date tanggalSelesai;
+    private String status;
     private DeveloperResponseDTO developer;
     private Date createdAt;
     private Date updatedAt;
