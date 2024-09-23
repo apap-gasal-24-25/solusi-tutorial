@@ -3,12 +3,12 @@ package apap.tutorial.manpromanpro.service;
 import java.util.List;
 import java.util.UUID;
 
-import apap.tutorial.manpromanpro.repository.ProyekDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import apap.tutorial.manpromanpro.model.Proyek;
+import apap.tutorial.manpromanpro.repository.ProyekDb;
 
 @Service
 public class ProyekServiceImpl implements ProyekService {

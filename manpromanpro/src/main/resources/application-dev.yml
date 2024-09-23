@@ -4,6 +4,6 @@ spring:
   application:
     name: manpromanpro
   datasource:
-    url: ${DATABASE_URL_DEV}
+    url: jdbc:postgresql://localhost:15001/manpromanpro
     username: ${DEV_USERNAME}
     password: ${DEV_PASSWORD}
