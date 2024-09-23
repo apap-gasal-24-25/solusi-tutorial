@@ -3,25 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
+    <title>Home</title>
+
+    <head th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    </head>
+
+    <head th:fragment="js">
+        <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    </head>
 </head>
 
 <body>
-    <nav th:fragment="navbar" class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold text-primary">ManproManpro</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="@{/}">Beranda</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 </body>
 
 </html>

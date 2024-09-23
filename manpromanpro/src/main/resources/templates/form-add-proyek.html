@@ -2,11 +2,11 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
-  <title>Tambah Proyek</title>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <title>Tambah Proyek</title>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
                                 <label for="nama-proyek" class="col-sm-2 fw-bold col-form-label">Nama Proyek</label>
                                 <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" id="nama-proyek" th:field="*{nama}"/>
+                                    <input class="form-control" type="text" id="nama-proyek" th:field="*{nama}" />
                                 </div>
                             </div>
 
@@ -39,13 +39,16 @@
                                 <label for="tanggal-mulai" class="col-sm-2 fw-bold col-form-label">Tanggal Mulai</label>
                                 <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
                                 <div class="col-sm-3">
-                                    <input class="form-control" type="date" id="tanggal-mulai" th:field="*{tanggalMulai}"/>
+                                    <input class="form-control" type="date" id="tanggal-mulai"
+                                        th:field="*{tanggalMulai}" />
                                 </div>
 
-                                <label for="tanggal-selesai" class="col-sm-2 fw-bold col-form-label">Tanggal Selesai</label>
+                                <label for="tanggal-selesai" class="col-sm-2 fw-bold col-form-label">Tanggal
+                                    Selesai</label>
                                 <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
                                 <div class="col-sm-3">
-                                    <input class="form-control" type="date" id="tanggal-selesai" th:field="*{tanggalSelesai}"/>
+                                    <input class="form-control" type="date" id="tanggal-selesai"
+                                        th:field="*{tanggalSelesai}" />
                                 </div>
                             </div>
 
@@ -55,18 +58,32 @@
                                 <div class="col-sm-3">
                                     <select class="form-control" id="status" th:field="*{status}">
                                         <option value="" disabled selected>Status Proyek...</option>
-                                        <option th:each="status : ${statusLevel}" th:value="${status}" th:text="${status}"></option>
+                                        <option th:each="status : ${statusLevel}" th:value="${status}"
+                                            th:text="${status}"></option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="form-group column my-3">
+                                <label for="developer" class="col-sm-2 fw-bold col-form-label">Developer: </label>
+                                <table class="table">
+                                    <th class="d-flex justify-content-end">
+                                        <button class="btn btn-primary" type="submit" name="addRow">Tambah Row</button>
+                                    </th>
+                                    <tr th:each="developer, iterationStatus : *{listDeveloper}">
+                                        <td>
+                                            <select
+                                                th:field="*{listDeveloper[__${iterationStatus.index}__].idDeveloper}"
+                                                class="form-control">
+                                                <div th:each="developerExisting : ${listDeveloperExisting}">
+                                                    <option th:value="${developerExisting.idDeveloper}"
+                                                        th:value="${developerExisting.namaDeveloper}"></option>
+                                                </div>
+                                            </select>
+                                        </td>
 
-                                <label for="developer" class="col-sm-2 fw-bold col-form-label">Developer</label>
-                                <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
-                                <div class="col-sm-3">
-                                    <select class="form-control" id="developer" th:field="*{developer}">
-                                        <option value="" disabled selected>Daftar Developer...</option>
-                                        <option th:each="developer: ${listDeveloper}" th:value="${developer.id}" th:text="${developer.nama}"></option>
-                                    </select>
-                                </div>
+                                    </tr>
+                                </table>
+
                             </div>
 
                             <div class="text-center m-3">
@@ -80,4 +97,5 @@
         </div>
     </div>
 </body>
+
 </html>

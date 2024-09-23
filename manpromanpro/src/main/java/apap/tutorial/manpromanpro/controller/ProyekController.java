@@ -1,5 +1,6 @@
 package apap.tutorial.manpromanpro.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import apap.tutorial.manpromanpro.dto.request.AddProyekRequestDTO;
 import apap.tutorial.manpromanpro.dto.request.UpdateProyekRequestDTO;
+import apap.tutorial.manpromanpro.model.Developer;
 import apap.tutorial.manpromanpro.model.Proyek;
 import apap.tutorial.manpromanpro.service.DeveloperService;
 import apap.tutorial.manpromanpro.service.ProyekService;
@@ -79,7 +81,7 @@ public class ProyekController {
         proyek.setTanggalMulai(proyekDTO.getTanggalMulai());
         proyek.setTanggalSelesai(proyekDTO.getTanggalSelesai());
         proyek.setStatus(proyekDTO.getStatus());
-        proyek.setDeveloper(proyekDTO.getDeveloper());
+        // proyek.setDeveloper(proyekDTO.getDeveloper());
 
         proyekService.addProyek(proyek);
         
@@ -87,6 +89,21 @@ public class ProyekController {
                 String.format("Proyek %s dengan ID %s berhasil ditambahkan.", proyek.getNama(), proyek.getId()));
 
         return "response-proyek";
+    }
+
+    @PostMapping(value="/proyek/add", params={"addRow"})
+    public String addRowDeveloperProyek(@ModelAttribute AddProyekRequestDTO addProyekRequestDTO, Model model){
+        
+        if(addProyekRequestDTO.getListDeveloper() == null || addProyekRequestDTO.getListDeveloper().isEmpty()){
+            addProyekRequestDTO.setListDeveloper(new ArrayList<>());
+        }
+
+        addProyekRequestDTO.getListDeveloper().add(new Developer());
+
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("proyekDTO", addProyekRequestDTO);
+
+        return "form-add-proyek";
     }
 
     @GetMapping("/proyek/viewall")
@@ -139,7 +156,7 @@ public class ProyekController {
         proyekDTO.setTanggalMulai(proyek.getTanggalMulai());
         proyekDTO.setTanggalSelesai(proyek.getTanggalSelesai());
         proyekDTO.setStatus(proyek.getStatus());
-        proyekDTO.setDeveloper(proyek.getDeveloper());
+        // proyekDTO.setDeveloper(proyek.getDeveloper());
 
         model.addAttribute("proyekDTO", proyekDTO);
         model.addAttribute("listDeveloper", developerService.getAllDeveloper());
@@ -173,7 +190,7 @@ public class ProyekController {
         proyekFromDTO.setTanggalMulai(proyekDTO.getTanggalMulai());
         proyekFromDTO.setTanggalSelesai(proyekDTO.getTanggalSelesai());
         proyekFromDTO.setStatus(proyekDTO.getStatus());
-        proyekFromDTO.setDeveloper(proyekDTO.getDeveloper());
+        // proyekFromDTO.setDeveloper(proyekDTO.getDeveloper());
 
         var proyek = proyekService.updateProyek(proyekFromDTO);
 
