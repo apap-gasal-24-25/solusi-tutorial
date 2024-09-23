@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -55,11 +56,13 @@ public class Proyek {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     @Column(name = "tanggal_mulai", columnDefinition = "DATE", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date tanggalMulai;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     @Column(name = "tanggal_selesai", columnDefinition = "DATE", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date tanggalSelesai;
 
     @NotNull
