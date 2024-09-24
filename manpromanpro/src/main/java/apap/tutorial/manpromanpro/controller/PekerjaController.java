@@ -23,7 +23,7 @@ public class PekerjaController {
     ProyekService proyekService;
 
     @GetMapping("/pekerja/add")
-    public String formAddDeveloper(Model model) {
+    public String formAddPekerja(Model model) {
         var pekerjaDTO = new AddPekerjaRequestDTO();
 
         model.addAttribute("pekerjaDTO", pekerjaDTO);
@@ -32,7 +32,7 @@ public class PekerjaController {
     }
 
     @PostMapping("/pekerja/add")
-    public String addDeveloper(@ModelAttribute("developerDTO") AddPekerjaRequestDTO pekerjaDTO, Model model) {
+    public String addPekerja(@ModelAttribute("pekerjaDTO") AddPekerjaRequestDTO pekerjaDTO, Model model) {
         var pekerja = new Pekerja();
         pekerja.setNama(pekerjaDTO.getNama());
         pekerja.setBiografi(pekerjaDTO.getBiografi());
@@ -47,7 +47,7 @@ public class PekerjaController {
     }
 
     @GetMapping("/pekerja/viewall")
-    public String listDeveloper(Model model) {
+    public String listPekerja(Model model) {
         var listPekerja = pekerjaService.getAllPekerja();
         var deleteDTO = new DeleteMultiplePekerjaDTO();
 
