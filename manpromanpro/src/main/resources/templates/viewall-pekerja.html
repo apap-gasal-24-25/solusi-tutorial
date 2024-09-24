@@ -16,12 +16,16 @@
         </div>
         <form th:action="@{/pekerja/delete}" th:object="${deleteDTO}" method="POST">
             <table class="table">
+                <div class="alert alert-warning" role="alert">
+                    Catatan: Pekerja yang tidak dapat terpilih sudah memiliki relasi dengan suatu proyek
+                </div>
                 <thead>
                     <tr>
                         <th scope="col">Nama</th>
                         <th scope="col">Usia</th>
                         <th scope="col">Pekerjaan</th>
                         <th scope="col">Biografi</th>
+                        <th scope="col">Proyek</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,6 +34,11 @@
                         <td th:text="${pekerja.usia}"></td>
                         <td th:text="${pekerja.pekerjaan}"></td>
                         <td th:text="${pekerja.biografi}"></td>
+                        <td>
+                            <ul>
+                                <li th:each="proyek: ${pekerja.getListProyek()}" th:text="${proyek.nama}"></li>
+                            </ul>
+                        </td>
                         <td>
                             <input type="checkbox" class="form-check-input" id="flexCheckDefault"
                                 th:field="*{listPekerja}" th:value="${pekerja.id}">
