@@ -1,7 +1,10 @@
 package apap.tutorial.manpromanpro.model;
 
+import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
@@ -24,6 +27,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "pekerja")
+@SQLDelete(sql = "UPDATE pekerja SET deleted_at = NOW() WHERE id=?")
+@SQLRestriction("deleted_at IS NULL")
 public class Pekerja {
 
     @Id
@@ -48,6 +53,9 @@ public class Pekerja {
     @NotNull
     @Column(name = "biografi", columnDefinition = "TEXT", nullable = false)
     private String biografi;
+
+    @Column(name = "deleted_at")
+    private Date deleted_at;
 
     @ManyToMany
     List<Proyek> listProyek;
