@@ -178,10 +178,43 @@ public class ProyekController {
         proyekDTO.setTanggalMulai(proyek.getTanggalMulai());
         proyekDTO.setTanggalSelesai(proyek.getTanggalSelesai());
         proyekDTO.setStatus(proyek.getStatus());
-        // proyekDTO.setDeveloper(proyek.getDeveloper());
+        proyekDTO.setDeveloper(proyek.getDeveloper());
+        proyekDTO.setListPekerja(proyek.getListPekerja());
 
         model.addAttribute("proyekDTO", proyekDTO);
         model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("statusLevel", StatusLevel.values());
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+
+        return "form-update-proyek";
+    }
+
+    @PostMapping(value="/proyek/update", params={"addRow"})
+    public String addRowPekerjaProyek(@ModelAttribute UpdateProyekRequestDTO proyekDTO, Model model){
+
+        if(proyekDTO.getListPekerja() == null || proyekDTO.getListPekerja().isEmpty()){
+            proyekDTO.setListPekerja(new ArrayList<>());
+        }
+
+        proyekDTO.getListPekerja().add(new Pekerja());
+
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("proyekDTO", proyekDTO);
+        model.addAttribute("statusLevel", StatusLevel.values());
+
+        return "form-update-proyek";
+    }
+
+    @PostMapping(value="/proyek/update", params={"deleteRow"})
+    public String deleteRowPekerjaProyek(@ModelAttribute UpdateProyekRequestDTO proyekDTO,
+                                           @RequestParam("deleteRow") int row,
+                                           Model model){
+        proyekDTO.getListPekerja().remove(row);
+
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("proyekDTO", proyekDTO);
         model.addAttribute("statusLevel", StatusLevel.values());
 
         return "form-update-proyek";
@@ -212,7 +245,8 @@ public class ProyekController {
         proyekFromDTO.setTanggalMulai(proyekDTO.getTanggalMulai());
         proyekFromDTO.setTanggalSelesai(proyekDTO.getTanggalSelesai());
         proyekFromDTO.setStatus(proyekDTO.getStatus());
-        // proyekFromDTO.setDeveloper(proyekDTO.getDeveloper());
+        proyekFromDTO.setDeveloper(proyekDTO.getDeveloper());
+        proyekFromDTO.setListPekerja(proyekDTO.getListPekerja());
 
         var proyek = proyekService.updateProyek(proyekFromDTO);
 
