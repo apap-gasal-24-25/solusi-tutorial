@@ -158,6 +158,15 @@ public class ProyekController {
         return "viewall-proyek";
     }
 
+    @GetMapping("/proyek/datatable")
+    public String getProyekDataTable(Model model) {
+        List<Proyek> projects = proyekService.getAllProyek();
+
+        model.addAttribute("projects", projects);
+
+        return "view-proyek-datatable";
+    }
+
     @GetMapping("/proyek/{id}")
     public String detailProyek(@PathVariable("id") UUID id, Model model) {
         var proyek = proyekService.getProyekById(id);
