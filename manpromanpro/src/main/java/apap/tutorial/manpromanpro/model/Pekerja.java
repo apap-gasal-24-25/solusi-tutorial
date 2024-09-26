@@ -42,6 +42,6 @@ public class Pekerja {
     private String biografi;
 
     @JsonManagedReference
-    @ManyToMany(mappedBy = "listPekerja", fetch = FetchType.LAZY)
+    @ManyToMany
     List<Proyek> listProyek;
 }

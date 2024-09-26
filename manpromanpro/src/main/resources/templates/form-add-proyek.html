@@ -69,6 +69,30 @@
                                 </div>
                             </div>
 
+                            <div class="form-group column my-3">
+                                <label for="pekerja" class="col-sm-2 fw-bold col-form-label">Pekerja: </label>
+                                <table class="table">
+                                    <th class="d-flex justify-content-end">
+                                        <button class="btn btn-primary" type="submit" name="addRow">Tambah Row</button>
+                                    </th>
+                                    <tr th:each="pekerja, iterationStatus : *{listPekerja}">
+                                        <td>
+                                            <select th:field="*{listPekerja[__${iterationStatus.index}__].id}"
+                                                class="form-control">
+                                                <div th:each="pekerjaExisting : ${listPekerjaExisting}">
+                                                    <option th:text="${pekerjaExisting.nama}"
+                                                        th:value="${pekerjaExisting.id}"></option>
+                                                </div>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button th:value="${iterationStatus.index}" class="btn btn-danger"
+                                                type="submit" name="deleteRow">Hapus</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
                             <div class="text-center m-3">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                                 <a class="btn btn-primary" href="/">Home</a>

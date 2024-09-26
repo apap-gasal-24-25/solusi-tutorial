@@ -4,6 +4,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -69,13 +75,11 @@ public class Proyek {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_developer", referencedColumnName = "id")
-    @JsonManagedReference
     private Developer developer;
 
     @ManyToMany
     @JoinTable(name = "pekerja_proyek", joinColumns = @JoinColumn(name = "id_proyek"),
             inverseJoinColumns = @JoinColumn(name = "id_pekerja"))
-    @JsonBackReference
     List<Pekerja> listPekerja;
 
     @CreationTimestamp

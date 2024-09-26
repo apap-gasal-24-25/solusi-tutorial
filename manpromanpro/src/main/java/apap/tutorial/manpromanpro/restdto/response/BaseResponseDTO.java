@@ -1,4 +1,4 @@
-package apap.tutorial.manpromanpro.dto.response;
+package apap.tutorial.manpromanpro.restdto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

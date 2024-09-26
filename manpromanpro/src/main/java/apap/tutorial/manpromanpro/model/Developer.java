@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -46,7 +47,7 @@ public class Developer {
     private String email;
 
     @OneToMany(mappedBy = "developer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference
+    @SQLRestriction("deleted_at IS NULL")
     private List<Proyek> listProyek;
 
     @CreationTimestamp

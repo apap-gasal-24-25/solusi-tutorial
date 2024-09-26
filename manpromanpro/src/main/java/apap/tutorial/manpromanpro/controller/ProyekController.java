@@ -1,5 +1,6 @@
 package apap.tutorial.manpromanpro.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import apap.tutorial.manpromanpro.dto.request.AddProyekRequestDTO;
 import apap.tutorial.manpromanpro.dto.request.UpdateProyekRequestDTO;
+import apap.tutorial.manpromanpro.model.Pekerja;
 import apap.tutorial.manpromanpro.model.Proyek;
 import apap.tutorial.manpromanpro.service.DeveloperService;
+import apap.tutorial.manpromanpro.service.PekerjaService;
 import apap.tutorial.manpromanpro.service.ProyekService;
 import jakarta.validation.Valid;
 
@@ -31,6 +34,9 @@ public class ProyekController {
 
     @Autowired
     private DeveloperService developerService;
+
+    @Autowired
+    private PekerjaService pekerjaService;
 
     enum StatusLevel {
         STARTED,
@@ -51,6 +57,7 @@ public class ProyekController {
         model.addAttribute("proyekDTO", proyekDTO);
         model.addAttribute("listDeveloper", developerService.getAllDeveloper());
         model.addAttribute("statusLevel", StatusLevel.values());
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
 
         return "form-add-proyek";
     }
@@ -80,6 +87,7 @@ public class ProyekController {
         proyek.setTanggalSelesai(proyekDTO.getTanggalSelesai());
         proyek.setStatus(proyekDTO.getStatus());
         proyek.setDeveloper(proyekDTO.getDeveloper());
+        proyek.setListPekerja(proyekDTO.getListPekerja());
 
         proyekService.addProyek(proyek);
         
@@ -87,6 +95,37 @@ public class ProyekController {
                 String.format("Proyek %s dengan ID %s berhasil ditambahkan.", proyek.getNama(), proyek.getId()));
 
         return "response-proyek";
+    }
+
+    @PostMapping(value="/proyek/add", params={"addRow"})
+    public String addRowDeveloperProyek(@ModelAttribute AddProyekRequestDTO addProyekRequestDTO, Model model){
+        
+        if(addProyekRequestDTO.getListPekerja() == null || addProyekRequestDTO.getListPekerja().isEmpty()){
+            addProyekRequestDTO.setListPekerja(new ArrayList<>());
+        }
+
+        addProyekRequestDTO.getListPekerja().add(new Pekerja());
+
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("proyekDTO", addProyekRequestDTO);
+        model.addAttribute("statusLevel", StatusLevel.values());
+
+        return "form-add-proyek";
+    }
+
+    @PostMapping(value="/proyek/add", params={"deleteRow"})
+    public String deleteRowDeveloperProyek(@ModelAttribute AddProyekRequestDTO addProyekRequestDTO,
+    @RequestParam("deleteRow") int row,
+    Model model){
+        addProyekRequestDTO.getListPekerja().remove(row);
+
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("proyekDTO", addProyekRequestDTO);
+        model.addAttribute("statusLevel", StatusLevel.values());
+
+        return "form-add-proyek";
     }
 
     @GetMapping("/proyek/viewall")
@@ -119,6 +158,15 @@ public class ProyekController {
         return "viewall-proyek";
     }
 
+    @GetMapping("/proyek/datatable")
+    public String getProyekDataTable(Model model) {
+        List<Proyek> projects = proyekService.getAllProyek();
+
+        model.addAttribute("projects", projects);
+
+        return "view-proyek-datatable";
+    }
+
     @GetMapping("/proyek/{id}")
     public String detailProyek(@PathVariable("id") UUID id, Model model) {
         var proyek = proyekService.getProyekById(id);
@@ -140,9 +188,42 @@ public class ProyekController {
         proyekDTO.setTanggalSelesai(proyek.getTanggalSelesai());
         proyekDTO.setStatus(proyek.getStatus());
         proyekDTO.setDeveloper(proyek.getDeveloper());
+        proyekDTO.setListPekerja(proyek.getListPekerja());
 
         model.addAttribute("proyekDTO", proyekDTO);
         model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("statusLevel", StatusLevel.values());
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+
+        return "form-update-proyek";
+    }
+
+    @PostMapping(value="/proyek/update", params={"addRow"})
+    public String addRowPekerjaProyek(@ModelAttribute UpdateProyekRequestDTO proyekDTO, Model model){
+
+        if(proyekDTO.getListPekerja() == null || proyekDTO.getListPekerja().isEmpty()){
+            proyekDTO.setListPekerja(new ArrayList<>());
+        }
+
+        proyekDTO.getListPekerja().add(new Pekerja());
+
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("proyekDTO", proyekDTO);
+        model.addAttribute("statusLevel", StatusLevel.values());
+
+        return "form-update-proyek";
+    }
+
+    @PostMapping(value="/proyek/update", params={"deleteRow"})
+    public String deleteRowPekerjaProyek(@ModelAttribute UpdateProyekRequestDTO proyekDTO,
+                                           @RequestParam("deleteRow") int row,
+                                           Model model){
+        proyekDTO.getListPekerja().remove(row);
+
+        model.addAttribute("listPekerjaExisting", pekerjaService.getAllPekerja());
+        model.addAttribute("listDeveloper", developerService.getAllDeveloper());
+        model.addAttribute("proyekDTO", proyekDTO);
         model.addAttribute("statusLevel", StatusLevel.values());
 
         return "form-update-proyek";
@@ -174,6 +255,7 @@ public class ProyekController {
         proyekFromDTO.setTanggalSelesai(proyekDTO.getTanggalSelesai());
         proyekFromDTO.setStatus(proyekDTO.getStatus());
         proyekFromDTO.setDeveloper(proyekDTO.getDeveloper());
+        proyekFromDTO.setListPekerja(proyekDTO.getListPekerja());
 
         var proyek = proyekService.updateProyek(proyekFromDTO);
 

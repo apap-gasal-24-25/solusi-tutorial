@@ -1,13 +1,20 @@
 package apap.tutorial.manpromanpro.dto.request;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import apap.tutorial.manpromanpro.model.Developer;
+import apap.tutorial.manpromanpro.model.Pekerja;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-import jakarta.validation.constraints.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,5 +40,8 @@ public class AddProyekRequestDTO {
 
     @NotNull(message = "Developer proyek tidak boleh kosong")
     private Developer developer;
+
+    @NotNull(message = "Pekerja proyek tidak boleh kosong")
+    private List<Pekerja> listPekerja;
 }
 

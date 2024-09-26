@@ -1,10 +1,6 @@
 spring:
-  application:
-    name: manpromanpro
-  datasource:
-    url: jdbc:postgresql://localhost:15001/manpromanpro
-    username: postgres
-    password: secret99
+  profiles:
+    active: 'dev'
   jpa:
     properties:
       hibernate:

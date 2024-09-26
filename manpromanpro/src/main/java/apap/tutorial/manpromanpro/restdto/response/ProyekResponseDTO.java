@@ -1,8 +1,10 @@
-package apap.tutorial.manpromanpro.dto.response;
+package apap.tutorial.manpromanpro.restdto.response;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
@@ -17,8 +19,10 @@ public class ProyekResponseDTO {
     private Date tanggalMulai;
     private Date tanggalSelesai;
     private String status;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private DeveloperResponseDTO developer;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<PekerjaResponseDTO> listPekerja;
     private Date createdAt;
     private Date updatedAt;
-    private Date deletedAt;
 }

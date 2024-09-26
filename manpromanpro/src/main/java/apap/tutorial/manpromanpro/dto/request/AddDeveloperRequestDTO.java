@@ -1,11 +1,12 @@
 package apap.tutorial.manpromanpro.dto.request;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor

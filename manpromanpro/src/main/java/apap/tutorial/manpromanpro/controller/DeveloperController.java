@@ -1,7 +1,5 @@
 package apap.tutorial.manpromanpro.controller;
 
-import apap.tutorial.manpromanpro.model.Developer;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import apap.tutorial.manpromanpro.dto.request.AddDeveloperRequestDTO;
 import apap.tutorial.manpromanpro.dto.request.UpdateDeveloperRequestDTO;
+import apap.tutorial.manpromanpro.model.Developer;
 import apap.tutorial.manpromanpro.service.DeveloperService;
 import apap.tutorial.manpromanpro.service.ProyekService;
 
