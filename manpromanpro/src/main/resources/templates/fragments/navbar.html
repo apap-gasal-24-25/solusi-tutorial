@@ -18,6 +18,25 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/}">Beranda</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/viewall/developer}"
+                            th:classappend="${currentUrl.contains('developer') ? 'active' : ''}">
+                            Developer
+                        </a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/viewall/pekerja}"
+                            th:classappend="${currentUrl.contains('pekerja') ? 'active' : ''}">
+                            Pekerja
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/viewall/proyek}"
+                            th:classappend="${currentUrl.contains('proyek') ? 'active' : ''}">
+                            Proyek
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
