@@ -80,6 +80,7 @@ public class Proyek {
     @ManyToMany
     @JoinTable(name = "pekerja_proyek", joinColumns = @JoinColumn(name = "id_proyek"),
             inverseJoinColumns = @JoinColumn(name = "id_pekerja"))
+    @SQLRestriction("deleted_at IS NULL")
     List<Pekerja> listPekerja;
 
     @CreationTimestamp
