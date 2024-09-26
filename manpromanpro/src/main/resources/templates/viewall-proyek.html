@@ -40,34 +40,7 @@
         </div>
 
         <div th:each="proyek: ${listProyek}">
-            <div class="row justify-content-center m-2">
-                <div class="card" style="width: 40rem;">
-                    <div class="card-body">
-                        <h5 th:text="${proyek.nama}" class="card-title row my-3"></h5>
-                        <div class="row" th:if="${proyek.listPekerja.size} != 0">
-                            <h6 class="card-subtitle row my-3">Pekerja: </h6>
-                            <ul th:each="pekerja : ${proyek.listPekerja}" class="d-flex flex-row">
-                                <li th:text="${pekerja.nama}"></li>
-                            </ul>
-                        </div>
-                        <h6 th:if="${proyek.developer != null}" th:text="'Nama Developer : '+${proyek.developer.nama}"
-                            class="card-subtitle row my-3"></h6>
-                        <h6 th:if="${proyek.developer == null}" th:text="'Nama Developer : -"
-                            class="card-subtitle row my-3"></h6>
-                        <h6 th:text="'Status : ' + ${proyek.status}" class="card-subtitle row my-3"></h6>
-                        <div class="row my-3">
-                            <a type="button" class="btn btn-md btn-primary col-sm-2 mx-2"
-                                th:href="@{/proyek/{idProyek}(idProyek=${proyek.id})}">Detail
-                            </a>
-                            <a type="button" class="btn btn-md btn-warning col-sm-2 mx-2"
-                                th:href="@{/proyek/{idProyek}/update(idProyek=${proyek.id})}"> Update
-                            </a>
-                            <a type="button" class="btn btn-md btn-danger col-sm-2 mx-2"
-                                th:href="@{/proyek/{idProyek}/delete(idProyek=${proyek.id})}"> Delete
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="row justify-content-center m-2" th:insert="fragments/card::project-card(${proyek})">
             </div>
         </div>
         <div class="text-center m-3">
