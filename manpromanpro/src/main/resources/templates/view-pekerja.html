@@ -46,7 +46,7 @@
                     <p class="card-text col-sm-8" th:if="${pekerja.listProyek == null || #lists.size(pekerja.listProyek) == 0}">-</p>
                 </div>
 
-                <table th:if="${pekerja.listProyek != null && #lists.size(pekerja.listProyek) > 0}" class="table my-3">
+                <table id="table-proyek" th:if="${pekerja.listProyek != null && #lists.size(pekerja.listProyek) > 0}" class="table my-3">
                     <thead>
                     <tr>
                         <th scope="col" class="text-center">No. </th>
@@ -70,6 +70,12 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#table-proyek').DataTable({
+            "lengthMenu": [5, 10, 20],
+        });
+    });
+</script>
 </body>
-
 </html>

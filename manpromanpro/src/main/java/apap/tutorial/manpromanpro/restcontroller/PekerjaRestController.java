@@ -39,7 +39,7 @@ public class PekerjaRestController {
 
         baseResponseDTO.setStatus(HttpStatus.OK.value());
         baseResponseDTO.setData(listPekerja);
-        baseResponseDTO.setMessage(String.format("Berhasil mendapatkan data-data pekerja"));
+        baseResponseDTO.setMessage(String.format("List pekerja berhasil ditemukan"));
         baseResponseDTO.setTimestamp(new Date());
         return new ResponseEntity<>(baseResponseDTO, HttpStatus.OK);
     }
@@ -58,7 +58,7 @@ public class PekerjaRestController {
 
         baseResponseDTO.setStatus(HttpStatus.OK.value());
         baseResponseDTO.setData(pekerja);
-        baseResponseDTO.setMessage("Berhasil mendapatkan data pekerja");
+        baseResponseDTO.setMessage(String.format("Pekerja dengan ID %s berhasil ditemukan", pekerja.getId()));
         baseResponseDTO.setTimestamp(new Date());
         
         return new ResponseEntity<>(baseResponseDTO, HttpStatus.OK);
@@ -92,7 +92,7 @@ public class PekerjaRestController {
 
         baseResponseDTO.setStatus(HttpStatus.CREATED.value());
         baseResponseDTO.setData(pekerja);
-        baseResponseDTO.setMessage("Berhasil menambahkan data pekerja");
+        baseResponseDTO.setMessage(String.format("Pekerja dengan ID %s berhasil ditambahkan", pekerja.getId()));
         baseResponseDTO.setTimestamp(new Date());
 
         return new ResponseEntity<>(baseResponseDTO, HttpStatus.CREATED);
@@ -126,7 +126,7 @@ public class PekerjaRestController {
 
         baseResponseDTO.setStatus(HttpStatus.OK.value());
         baseResponseDTO.setData(pekerja);
-        baseResponseDTO.setMessage("Berhasil mengubah data pekerja");
+        baseResponseDTO.setMessage(String.format("Pekerja dengan ID %s berhasil diubah", pekerja.getId()));
         baseResponseDTO.setTimestamp(new Date());
 
         return new ResponseEntity<>(baseResponseDTO, HttpStatus.OK);
