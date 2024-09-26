@@ -50,6 +50,6 @@ public class Pekerja {
     private Date deleted_at;
 
     @JsonManagedReference
-    @ManyToMany
+    @ManyToMany(mappedBy = "listPekerja", fetch = FetchType.LAZY)
     List<Proyek> listProyek;
 }
