@@ -8,9 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Setter
 @Getter
@@ -18,6 +21,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @AllArgsConstructor
 @Entity
 @Table(name = "pekerja")
+@SQLDelete(sql = "UPDATE pekerja SET deleted_at = NOW() WHERE id=?")
+@SQLRestriction("deleted_at IS NULL")
 public class Pekerja {
 
     @Id
@@ -40,6 +45,9 @@ public class Pekerja {
 
     @Column(name = "biografi", columnDefinition = "TEXT")
     private String biografi;
+
+    @Column(name = "deleted_at")
+    private Date deleted_at;
 
     @JsonManagedReference
     @ManyToMany
