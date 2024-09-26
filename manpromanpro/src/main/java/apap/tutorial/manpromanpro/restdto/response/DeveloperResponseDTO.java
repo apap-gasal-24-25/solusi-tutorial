@@ -3,10 +3,12 @@ package apap.tutorial.manpromanpro.restdto.response;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,6 +17,7 @@ public class DeveloperResponseDTO {
     private Long id;
     private String nama;
     private String alamat;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date tanggalBerdiri;
     private String email;
     @JsonInclude(JsonInclude.Include.NON_NULL)
