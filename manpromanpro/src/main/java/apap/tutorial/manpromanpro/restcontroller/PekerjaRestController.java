@@ -1,5 +1,6 @@
 package apap.tutorial.manpromanpro.restcontroller;
 
+import apap.tutorial.manpromanpro.restdto.request.UpdatePekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.response.BaseResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +100,7 @@ public class PekerjaRestController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updatePekerja(@Valid @RequestBody UpdatePekerjaRequestDTO pekerjaDTO,
+    public ResponseEntity<?> updatePekerja(@Valid @RequestBody UpdatePekerjaRequestRestDTO pekerjaDTO,
                                            BindingResult bindingResult) {
         var baseResponseDTO = new BaseResponseDTO<PekerjaResponseDTO>();
 
@@ -116,7 +117,7 @@ public class PekerjaRestController {
             return new ResponseEntity<>(baseResponseDTO, HttpStatus.BAD_REQUEST);
         }
 
-        PekerjaResponseDTO pekerja = pekerjaService.updatePekerja(pekerjaDTO);
+        PekerjaResponseDTO pekerja = pekerjaService.updatePekerjaRest(pekerjaDTO);
         if (pekerja == null) {
             baseResponseDTO.setStatus(HttpStatus.NOT_FOUND.value());
             baseResponseDTO.setMessage(String.format("Data pekerja tidak ditemukan"));

@@ -1,5 +1,6 @@
 package apap.tutorial.manpromanpro.restservice;
 
+import apap.tutorial.manpromanpro.restdto.request.UpdatePekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.response.DeveloperResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.ProyekResponseDTO;
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import apap.tutorial.manpromanpro.dto.request.AddPekerjaRequestDTO;
-import apap.tutorial.manpromanpro.dto.request.UpdatePekerjaRequestDTO;
 import apap.tutorial.manpromanpro.model.Pekerja;
 import apap.tutorial.manpromanpro.model.Proyek;
 import apap.tutorial.manpromanpro.repository.PekerjaDb;
@@ -155,7 +155,7 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
     }
 
     @Override
-    public PekerjaResponseDTO updatePekerja(UpdatePekerjaRequestDTO pekerjaDTO) {
+    public PekerjaResponseDTO updatePekerjaRest(UpdatePekerjaRequestRestDTO pekerjaDTO) {
         Pekerja pekerja = pekerjaDb.findById(pekerjaDTO.getId()).orElse(null);
         if (pekerja == null) {
             return null;

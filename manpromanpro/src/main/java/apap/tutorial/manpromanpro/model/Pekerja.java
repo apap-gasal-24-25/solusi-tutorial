@@ -11,7 +11,6 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;

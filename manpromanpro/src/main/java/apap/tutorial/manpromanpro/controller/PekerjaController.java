@@ -50,25 +50,12 @@ public class PekerjaController {
     @GetMapping("/pekerja/viewall")
     public String listPekerja(Model model) {
         try {
-            var listPekerja = pekerjaService.getAllPekerjaFromRest();
+            var listPekerja = pekerjaService.getAllPekerja();
             var deleteDTO = new DeleteMultiplePekerjaDTO();
 
             model.addAttribute("listPekerja", listPekerja);
             model.addAttribute("deleteDTO", deleteDTO);
             return "viewall-pekerja";
-        } catch (Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "response-error-rest";
-        }
-    }
-
-    @GetMapping("/pekerja/{id}")
-    public String detailPekerja(@PathVariable("id") Long id, Model model) {
-        try {
-            var pekerja = pekerjaService.getPekerjaByIdFromRest(id);
-            model.addAttribute("pekerja", pekerja);
-
-            return "view-pekerja";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "response-error-rest";
