@@ -3,12 +3,16 @@ package apap.tutorial.manpromanpro.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import apap.tutorial.manpromanpro.restdto.request.AddPekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.response.BaseResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import com.fasterxml.jackson.databind.JsonSerializable.Base;
+
 import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
 
 import apap.tutorial.manpromanpro.model.Pekerja;
@@ -16,17 +20,17 @@ import apap.tutorial.manpromanpro.repository.PekerjaDb;
 import jakarta.transaction.Transactional;
 
 @Service
-public class PekerjaServiceImpl implements PekerjaService{
+public class PekerjaServiceImpl implements PekerjaService {
 
     @Autowired
     PekerjaDb pekerjaDb;
 
     private final WebClient webClient;
 
-    public PekerjaServiceImpl(WebClient.Builder webClientBuilder){
+    public PekerjaServiceImpl(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder
-                            .baseUrl("http://localhost:8080/api")
-                            .build();
+                .baseUrl("http://localhost:8080/api")
+                .build();
     }
 
     @Override
@@ -35,7 +39,8 @@ public class PekerjaServiceImpl implements PekerjaService{
                 .get()
                 .uri("/pekerja/viewall")
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<List<PekerjaResponseDTO>>>() {})
+                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<List<PekerjaResponseDTO>>>() {
+                })
                 .block();
 
         if (response == null) {
@@ -55,7 +60,8 @@ public class PekerjaServiceImpl implements PekerjaService{
                 .get()
                 .uri("/pekerja?id=" + idPekerja)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<PekerjaResponseDTO>>() {})
+                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<PekerjaResponseDTO>>() {
+                })
                 .block();
 
         if (response == null) {
@@ -70,7 +76,29 @@ public class PekerjaServiceImpl implements PekerjaService{
     }
 
     @Override
-    public Pekerja addPekerja(Pekerja pekerja){
+    public PekerjaResponseDTO addPekerjaFromRest(AddPekerjaRequestRestDTO pekerjaDTO) throws Exception {
+        var response = webClient
+                .post()
+                .uri("/pekerja/add")
+                .bodyValue(pekerjaDTO)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<PekerjaResponseDTO>>() {
+                })
+                .block();
+
+        if (response == null) {
+            throw new Exception("Failed consume API addPekerja");
+        }
+
+        if (response.getStatus() != 200) {
+            throw new Exception(response.getMessage());
+        }
+
+        return response.getData();
+    }
+
+    @Override
+    public Pekerja addPekerja(Pekerja pekerja) {
         return pekerjaDb.save(pekerja);
     }
 
@@ -81,12 +109,12 @@ public class PekerjaServiceImpl implements PekerjaService{
 
     @Override
     @Transactional
-    public void deleteListPekerja(List<Pekerja> listPekerja){
+    public void deleteListPekerja(List<Pekerja> listPekerja) {
         var pekerjaToDelete = new ArrayList<Pekerja>();
 
-        if(listPekerja != null){
-            for(Pekerja pekerja: listPekerja){
-                if(pekerja.getListProyek() == null || pekerja.getListProyek().isEmpty()){
+        if (listPekerja != null) {
+            for (Pekerja pekerja : listPekerja) {
+                if (pekerja.getListProyek() == null || pekerja.getListProyek().isEmpty()) {
                     pekerjaToDelete.add(pekerja);
                 }
             }
