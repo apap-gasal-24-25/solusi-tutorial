@@ -41,7 +41,7 @@
 
         <div th:each="proyek: ${listProyek}">
             <div class="row justify-content-center m-2" th:insert="fragments/card::project-card(${proyek})">
-            </div>
+            </div> 
         </div>
         <div class="text-center m-3">
             <a type="button" class="btn btn-primary m-2" href="/proyek/add">Tambah Proyek</a>
