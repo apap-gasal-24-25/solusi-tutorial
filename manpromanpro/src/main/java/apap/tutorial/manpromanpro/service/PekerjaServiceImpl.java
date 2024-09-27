@@ -32,6 +32,46 @@ public class PekerjaServiceImpl implements PekerjaService{
     }
 
     @Override
+    public List<PekerjaResponseDTO> getAllPekerjaFromRest() throws Exception {
+        var response = webClient
+                .get()
+                .uri("/pekerja/viewall")
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<List<PekerjaResponseDTO>>>() {})
+                .block();
+
+        if (response == null) {
+            throw new Exception("Failed consume API getAllPekerja");
+        }
+
+        if (response.getStatus() != 200) {
+            throw new Exception(response.getMessage());
+        }
+
+        return response.getData();
+    }
+
+    @Override
+    public PekerjaResponseDTO getPekerjaByIdFromRest(Long idPekerja) throws Exception {
+        var response = webClient
+                .get()
+                .uri("/pekerja?id=" + idPekerja)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<PekerjaResponseDTO>>() {})
+                .block();
+
+        if (response == null) {
+            throw new Exception("Failed consume API getPekerjaById");
+        }
+
+        if (response.getStatus() != 200) {
+            throw new Exception(response.getMessage());
+        }
+
+        return response.getData();
+    }
+
+    @Override
     public Pekerja addPekerja(Pekerja pekerja){
         return pekerjaDb.save(pekerja);
     }
@@ -55,29 +95,5 @@ public class PekerjaServiceImpl implements PekerjaService{
         }
 
         pekerjaDb.deleteAll(pekerjaToDelete);
-    }
-
-    @Override
-    public List<PekerjaResponseDTO> getAllPekerjaFromRest() throws HttpClientErrorException.NotFound, HttpServerErrorException.InternalServerError {
-        var response = webClient
-                .get()
-                .uri("/pekerja/viewall")
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<List<PekerjaResponseDTO>>>() {})
-                .block();
-
-        return response.getData();
-    }
-
-    @Override
-    public PekerjaResponseDTO getPekerjaByIdFromRest(Long idPekerja) throws HttpClientErrorException.NotFound, HttpServerErrorException.InternalServerError {
-        var response = webClient
-                .get()
-                .uri("/pekerja?id=" + idPekerja)
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<PekerjaResponseDTO>>() {})
-                .block();
-
-        return response.getData();
     }
 }

@@ -25,11 +25,13 @@
                 </div>
                 <thead>
                     <tr>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Usia</th>
-                        <th scope="col">Pekerjaan</th>
-                        <th scope="col">Biografi</th>
-                        <th scope="col">Proyek</th>
+                        <th scope="col" class="text-center">Nama</th>
+                        <th scope="col" class="text-center">Usia</th>
+                        <th scope="col" class="text-center">Pekerjaan</th>
+                        <th scope="col" class="text-center">Biografi</th>
+                        <th scope="col" class="text-center">Proyek</th>
+                        <th scope="col" class="text-center">IsDeleted?</th>
+                        <th scope="col" class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,15 +47,24 @@
                         </td>
                         <td>
                             <input type="checkbox" class="form-check-input" id="flexCheckDefault"
-                                th:field="*{listPekerja}" th:value="${pekerja.id}">
+                                   th:field="*{listPekerja}" th:value="${pekerja.id}">
+                        </td>
+                        <td>
+                            <div>
+                                <a type="button" class="btn btn-md btn-primary mx-2"
+                                   th:href="@{/pekerja/{idPekerja}(idPekerja=${pekerja.id})}">Detail
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div class="text-center m-3">
-                <button type="submit" class="btn btn-primary">Delete Selected</button>
-                <a type="button" class="btn btn-primary m-2" href="/pekerja/add">Tambah Pekerja</a>
-                <a type="button" class="btn btn-md btn-primary" href="/">Home</a>
+                <button type="submit" class="row btn btn-danger">Delete Selected</button>
+                <div>
+                    <a type="button" class="btn btn-primary m-2" href="/pekerja/add">Tambah Pekerja</a>
+                    <a type="button" class="btn btn-md btn-primary" href="/">Home</a>
+                </div>
             </div>
         </form>
     </div>

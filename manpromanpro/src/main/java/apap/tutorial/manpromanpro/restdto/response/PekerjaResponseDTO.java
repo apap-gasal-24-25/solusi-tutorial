@@ -1,5 +1,6 @@
 package apap.tutorial.manpromanpro.restdto.response;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -18,4 +19,6 @@ public class PekerjaResponseDTO {
     private String biografi;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<ProyekResponseDTO> listProyek;
+    private Date createdAt;
+    private Date updatedAt;
 }

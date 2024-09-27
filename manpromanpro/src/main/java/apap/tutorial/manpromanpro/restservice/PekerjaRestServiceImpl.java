@@ -65,6 +65,8 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
             pekerjaResponseDTO.setUsia(pekerja.getUsia());
             pekerjaResponseDTO.setPekerjaan(pekerja.getPekerjaan());
             pekerjaResponseDTO.setBiografi(pekerja.getBiografi());
+            pekerjaResponseDTO.setCreatedAt(pekerja.getCreatedAt());
+            pekerjaResponseDTO.setUpdatedAt(pekerja.getUpdatedAt());
 
             if (pekerja.getListProyek() != null) {
                 var listProyekResponseDTO = new ArrayList<ProyekResponseDTO>();
@@ -116,6 +118,8 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
         pekerjaResponseDTO.setUsia(getPekerja.getUsia());
         pekerjaResponseDTO.setPekerjaan(getPekerja.getPekerjaan());
         pekerjaResponseDTO.setBiografi(getPekerja.getBiografi());
+        pekerjaResponseDTO.setCreatedAt(getPekerja.getCreatedAt());
+        pekerjaResponseDTO.setUpdatedAt(getPekerja.getUpdatedAt());
 
         if (getPekerja.getListProyek() != null) {
             var listProyekResponseDTO = new ArrayList<ProyekResponseDTO>();
