@@ -2,14 +2,14 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <object th:include="~{fragments/common :: js}" th:remove="tag "></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag "></object>
-  <title>Tambah Pekerja</title>
+    <title>Tambah Pekerja</title>
 </head>
 
 <body>
-<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
     <div class="container">
         <div class="text-center my-4">
             <h2>Tambah Pekerja</h2>
@@ -23,7 +23,7 @@
                                 <label for="nama-pekerja" class="col-sm-2 fw-bold col-form-label">Nama Pekeja</label>
                                 <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" id="nama-pekerja" th:field="*{nama}"/>
+                                    <input class="form-control" type="text" id="nama-pekerja" th:field="*{nama}" />
                                 </div>
                             </div>
 
@@ -39,7 +39,7 @@
                                 <label for="usia" class="col-sm-2 fw-bold col-form-label">Usia</label>
                                 <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
                                 <div class="col-sm-3">
-                                    <input class="form-control" type="number" id="usia" th:field="*{usia}"/>
+                                    <input class="form-control" type="number" id="usia" th:field="*{usia}" />
                                 </div>
                             </div>
 
@@ -47,7 +47,7 @@
                                 <label for="pekerjaan" class="col-sm-2 fw-bold col-form-label">pekerjaan</label>
                                 <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" id="pekerjaan" th:field="*{pekerjaan}"/>
+                                    <input class="form-control" type="text" id="pekerjaan" th:field="*{pekerjaan}" />
                                 </div>
                             </div>
 
@@ -62,4 +62,5 @@
         </div>
     </div>
 </body>
+
 </html>

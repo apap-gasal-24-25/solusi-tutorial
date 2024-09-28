@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 public class BaseResponseDTO<T> {
     private int status;
-    private T data;
     private String message;
     private Date timestamp;
+    private T data;
 }

@@ -39,8 +39,7 @@ public class PekerjaServiceImpl implements PekerjaService {
                 .get()
                 .uri("/pekerja/viewall")
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<List<PekerjaResponseDTO>>>() {
-                })
+                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<List<PekerjaResponseDTO>>>() {})
                 .block();
 
         if (response == null) {
@@ -60,8 +59,7 @@ public class PekerjaServiceImpl implements PekerjaService {
                 .get()
                 .uri("/pekerja?id=" + idPekerja)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<PekerjaResponseDTO>>() {
-                })
+                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<PekerjaResponseDTO>>() {})
                 .block();
 
         if (response == null) {
@@ -82,15 +80,14 @@ public class PekerjaServiceImpl implements PekerjaService {
                 .uri("/pekerja/add")
                 .bodyValue(pekerjaDTO)
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<PekerjaResponseDTO>>() {
-                })
+                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<PekerjaResponseDTO>>() {})
                 .block();
 
         if (response == null) {
             throw new Exception("Failed consume API addPekerja");
         }
 
-        if (response.getStatus() != 200) {
+        if (response.getStatus() != 201) {
             throw new Exception(response.getMessage());
         }
 

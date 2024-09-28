@@ -1,13 +1,12 @@
 package apap.tutorial.manpromanpro.restservice;
 
+import apap.tutorial.manpromanpro.restdto.request.AddPekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.request.UpdatePekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.response.DeveloperResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.ProyekResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import apap.tutorial.manpromanpro.dto.request.AddPekerjaRequestDTO;
 import apap.tutorial.manpromanpro.model.Pekerja;
 import apap.tutorial.manpromanpro.model.Proyek;
 import apap.tutorial.manpromanpro.repository.PekerjaDb;
@@ -25,7 +24,7 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
     ProyekDb proyekDb;
 
     @Override
-    public PekerjaResponseDTO addPekerja(AddPekerjaRequestDTO pekerjaDTO) {
+    public PekerjaResponseDTO addPekerja(AddPekerjaRequestRestDTO pekerjaDTO) {
         Pekerja pekerja = new Pekerja();
         pekerja.setNama(pekerjaDTO.getNama());
         pekerja.setUsia(pekerjaDTO.getUsia());
@@ -42,7 +41,7 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
                 if (proyek != null) {
                     // Add the Proyek to the Pekerja's listProyek
                     pekerja.getListProyek().add(proyek);
-                    
+
                     // Add the Pekerja to the Proyek's listPekerja
                     proyek.getListPekerja().add(pekerja);
                 }
@@ -106,24 +105,24 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
 
     @Override
     public PekerjaResponseDTO getPekerjaById(Long idPekerja) {
-        var getPekerja = pekerjaDb.findById(idPekerja).orElse(null);
+        var pekerja = pekerjaDb.findById(idPekerja).orElse(null);
 
-        if (getPekerja == null) {
+        if (pekerja == null) {
             return null;
         }
 
         var pekerjaResponseDTO = new PekerjaResponseDTO();
-        pekerjaResponseDTO.setId(getPekerja.getId());
-        pekerjaResponseDTO.setNama(getPekerja.getNama());
-        pekerjaResponseDTO.setUsia(getPekerja.getUsia());
-        pekerjaResponseDTO.setPekerjaan(getPekerja.getPekerjaan());
-        pekerjaResponseDTO.setBiografi(getPekerja.getBiografi());
-        pekerjaResponseDTO.setCreatedAt(getPekerja.getCreatedAt());
-        pekerjaResponseDTO.setUpdatedAt(getPekerja.getUpdatedAt());
+        pekerjaResponseDTO.setId(pekerja.getId());
+        pekerjaResponseDTO.setNama(pekerja.getNama());
+        pekerjaResponseDTO.setUsia(pekerja.getUsia());
+        pekerjaResponseDTO.setPekerjaan(pekerja.getPekerjaan());
+        pekerjaResponseDTO.setBiografi(pekerja.getBiografi());
+        pekerjaResponseDTO.setCreatedAt(pekerja.getCreatedAt());
+        pekerjaResponseDTO.setUpdatedAt(pekerja.getUpdatedAt());
 
-        if (getPekerja.getListProyek() != null) {
+        if (pekerja.getListProyek() != null) {
             var listProyekResponseDTO = new ArrayList<ProyekResponseDTO>();
-            getPekerja.getListProyek().forEach(proyek -> {
+            pekerja.getListProyek().forEach(proyek -> {
                 var proyekResponseDTO = new ProyekResponseDTO();
                 var developerResponseDTO = new DeveloperResponseDTO();
 
@@ -169,24 +168,51 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
             pekerja.setBiografi(pekerjaDTO.getBiografi());
         }
 
-        if (pekerjaDTO.getListProyek() != null) {
-            pekerja.setListProyek(new ArrayList<>());
-            pekerjaDTO.getListProyek().forEach(idProyek -> {
-                Proyek proyek = proyekDb.findById(idProyek).orElse(null);
-                if (proyek != null) {
-                    // Add the Proyek to the Pekerja's listProyek
-                    pekerja.getListProyek().add(proyek);
+        var listProyekFromDTO = pekerjaDTO.getListProyek();
+        if (listProyekFromDTO != null) {
 
-                    // Add the Pekerja to the Proyek's listPekerja
-                    if (!proyek.getListPekerja().contains(pekerja)) {
+            var listProyekExisting = pekerja.getListProyek();
+
+            // Pekerja sudah memiliki list proyek sebelumnya
+            if (listProyekExisting != null && !listProyekExisting.isEmpty()) {
+
+                listProyekExisting.forEach(proyek -> {
+                    // Menghapus proyek dari pekerja
+                    if (!pekerjaDTO.getListProyek().contains(proyek.getId())) {
+                        proyek.getListPekerja().remove(pekerja);
+                    }
+                });
+
+                pekerja.setListProyek(new ArrayList<>());
+                pekerjaDTO.getListProyek().forEach(idProyek -> {
+                    Proyek proyek = proyekDb.findById(idProyek).orElse(null);
+                    if (proyek != null) {
+                        // Add the Proyek to the Pekerja's listProyek
+                        pekerja.getListProyek().add(proyek);
+
+                        // Add the Pekerja to the Proyek's listPekerja
+                        if (!proyek.getListPekerja().contains(pekerja)) {
+                            proyek.getListPekerja().add(pekerja);
+                        }
+                    }
+                });
+            // Pekerja belum memiliki list proyek sebelumnya
+            } else {
+                pekerja.setListProyek(new ArrayList<>());
+                listProyekFromDTO.forEach(idProyek -> {
+                    Proyek proyek = proyekDb.findById(idProyek).orElse(null);
+                    if (proyek != null) {
+                        // Add the Proyek to the Pekerja's listProyek
+                        pekerja.getListProyek().add(proyek);
+
+                        // Add the Pekerja to the Proyek's listPekerja
                         proyek.getListPekerja().add(pekerja);
                     }
-                }
-            });
+                });
+            }
         }
 
         var updatePekerja = pekerjaDb.save(pekerja);
         return getPekerjaById(updatePekerja.getId());
     }
 }
-

@@ -113,11 +113,11 @@ public class PekerjaController {
         model.addAttribute("pekerjaDTO", pekerjaDTO);
         model.addAttribute("listProyek", proyekService.getAllProyek());
 
-        return "form-add-pekerja";
+        return "form-add-pekerja-rest";
     }
 
-    @PostMapping("/pekerja/add")
-    public String addPekerja(@ModelAttribute @Valid AddPekerjaRequestRestDTO pekerjaDTO, 
+    @PostMapping("/pekerja/rest/add")
+    public String addPekerja(@Valid @ModelAttribute("pekerjaDTO") AddPekerjaRequestRestDTO pekerjaDTO, 
                                 BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getAllErrors()
@@ -144,6 +144,5 @@ public class PekerjaController {
             model.addAttribute("errorMessage", e.getMessage());
             return "response-error-rest";
         }
-
     }
 }

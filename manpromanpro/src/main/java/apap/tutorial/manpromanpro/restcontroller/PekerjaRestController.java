@@ -1,5 +1,6 @@
 package apap.tutorial.manpromanpro.restcontroller;
 
+import apap.tutorial.manpromanpro.restdto.request.AddPekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.request.UpdatePekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.response.BaseResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
@@ -15,10 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import apap.tutorial.manpromanpro.dto.request.AddPekerjaRequestDTO;
-import apap.tutorial.manpromanpro.dto.request.UpdatePekerjaRequestDTO;
-import apap.tutorial.manpromanpro.model.Pekerja;
 import apap.tutorial.manpromanpro.restservice.PekerjaRestService;
 import jakarta.validation.Valid;
 
@@ -31,12 +28,12 @@ import java.util.List;
 public class PekerjaRestController {
 
     @Autowired
-    PekerjaRestService pekerjaService;
+    PekerjaRestService pekerjaRestService;
 
     @GetMapping("/viewall")
     public ResponseEntity<?> listPekerja() {
         var baseResponseDTO = new BaseResponseDTO<List<PekerjaResponseDTO>>();
-        List<PekerjaResponseDTO> listPekerja = pekerjaService.getAllPekerja();
+        List<PekerjaResponseDTO> listPekerja = pekerjaRestService.getAllPekerja();
 
         baseResponseDTO.setStatus(HttpStatus.OK.value());
         baseResponseDTO.setData(listPekerja);
@@ -46,10 +43,10 @@ public class PekerjaRestController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> detailPekerja(@RequestParam Long id) {
+    public ResponseEntity<?> detailPekerja(@RequestParam("id") Long id) {
         var baseResponseDTO = new BaseResponseDTO<PekerjaResponseDTO>();
 
-        PekerjaResponseDTO pekerja = pekerjaService.getPekerjaById(id);
+        PekerjaResponseDTO pekerja = pekerjaRestService.getPekerjaById(id);
         if (pekerja == null) {
             baseResponseDTO.setStatus(HttpStatus.NOT_FOUND.value());
             baseResponseDTO.setMessage(String.format("Data pekerja tidak ditemukan"));
@@ -66,7 +63,7 @@ public class PekerjaRestController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addPekerja(@Valid @RequestBody AddPekerjaRequestDTO pekerjaDTO,
+    public ResponseEntity<?> addPekerja(@Valid @RequestBody AddPekerjaRequestRestDTO pekerjaDTO,
                                            BindingResult bindingResult) {
         var baseResponseDTO = new BaseResponseDTO<PekerjaResponseDTO>();
 
@@ -83,7 +80,7 @@ public class PekerjaRestController {
             return new ResponseEntity<>(baseResponseDTO, HttpStatus.BAD_REQUEST);
         }
 
-        PekerjaResponseDTO pekerja = pekerjaService.addPekerja(pekerjaDTO);
+        PekerjaResponseDTO pekerja = pekerjaRestService.addPekerja(pekerjaDTO);
         if (pekerja == null) {
             baseResponseDTO.setStatus(HttpStatus.NOT_FOUND.value());
             baseResponseDTO.setMessage(String.format("Data pekerja tidak ditemukan"));
@@ -117,7 +114,7 @@ public class PekerjaRestController {
             return new ResponseEntity<>(baseResponseDTO, HttpStatus.BAD_REQUEST);
         }
 
-        PekerjaResponseDTO pekerja = pekerjaService.updatePekerjaRest(pekerjaDTO);
+        PekerjaResponseDTO pekerja = pekerjaRestService.updatePekerjaRest(pekerjaDTO);
         if (pekerja == null) {
             baseResponseDTO.setStatus(HttpStatus.NOT_FOUND.value());
             baseResponseDTO.setMessage(String.format("Data pekerja tidak ditemukan"));
