@@ -14,7 +14,7 @@
         <div class="text-center my-4">
             <h2>Daftar Pekerja</h2>
         </div>
-        <form th:action="@{/pekerja/delete}" th:object="${deleteDTO}" method="POST">
+        <form th:object="${deleteDTO}">
             <table class="table">
                 <div class="alert alert-warning" role="alert">
                     Catatan: Pekerja yang tidak dapat terpilih sudah memiliki relasi dengan suatu proyek
@@ -63,5 +63,33 @@
         </form>
     </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        $('form').on('submit', function(e){
+            e.preventDefault();
 
+            const listPekerja = [];
+            $('.form-check-input:checked').each(function() {
+                listPekerja.push($(this).val())
+            })
+
+            $.ajax({
+                url: '/api/pekerja/delete',
+                type: 'DELETE',
+                data: JSON.stringify(listPekerja),
+                contentType: 'application/json',
+                success: function (data) {
+                    alert(data.message)
+                    location.reload()
+                },
+                error: function (data) {
+                    alert(data.message)
+                    location.reload()
+                }
+            })
+        })
+    })
+</script>
 </html>

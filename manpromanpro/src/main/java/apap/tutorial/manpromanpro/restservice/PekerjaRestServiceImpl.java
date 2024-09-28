@@ -5,7 +5,10 @@ import apap.tutorial.manpromanpro.restdto.request.UpdatePekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.response.DeveloperResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.ProyekResponseDTO;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.hibernate.ObjectNotFoundException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import apap.tutorial.manpromanpro.model.Pekerja;
@@ -13,6 +16,7 @@ import apap.tutorial.manpromanpro.model.Proyek;
 import apap.tutorial.manpromanpro.repository.PekerjaDb;
 import apap.tutorial.manpromanpro.repository.ProyekDb;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -38,6 +42,9 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
 
         pekerja.setListProyek(new ArrayList<>());
         if (pekerjaDTO.getListProyek() != null) {
+            var listProyekFromDTO = pekerjaDTO.getListProyek();
+            pekerjaDTO.setListProyek(listProyekFromDTO.stream().distinct().toList());
+
             pekerjaDTO.getListProyek().forEach(idProyek -> {
                 Proyek proyek = proyekDb.findById(idProyek).orElse(null);
                 if (proyek != null) {
@@ -51,7 +58,7 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
         }
 
         var newPekerja = pekerjaDb.save(pekerja);
-        return getPekerjaById(newPekerja.getId());
+        return pekerjaToPekerjaResponseDTO(newPekerja);
     }
 
     @Override
@@ -113,46 +120,7 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
             return null;
         }
 
-        var pekerjaResponseDTO = new PekerjaResponseDTO();
-        pekerjaResponseDTO.setId(pekerja.getId());
-        pekerjaResponseDTO.setNama(pekerja.getNama());
-        pekerjaResponseDTO.setUsia(pekerja.getUsia());
-        pekerjaResponseDTO.setPekerjaan(pekerja.getPekerjaan());
-        pekerjaResponseDTO.setBiografi(pekerja.getBiografi());
-        pekerjaResponseDTO.setCreatedAt(pekerja.getCreatedAt());
-        pekerjaResponseDTO.setUpdatedAt(pekerja.getUpdatedAt());
-
-        if (pekerja.getListProyek() != null) {
-            var listProyekResponseDTO = new ArrayList<ProyekResponseDTO>();
-            pekerja.getListProyek().forEach(proyek -> {
-                var proyekResponseDTO = new ProyekResponseDTO();
-                var developerResponseDTO = new DeveloperResponseDTO();
-
-                proyekResponseDTO.setId(proyek.getId());
-                proyekResponseDTO.setNama(proyek.getNama());
-                proyekResponseDTO.setDeskripsi(proyek.getDeskripsi());
-                proyekResponseDTO.setTanggalMulai(proyek.getTanggalMulai());
-                proyekResponseDTO.setTanggalSelesai(proyek.getTanggalSelesai());
-                proyekResponseDTO.setStatus(proyek.getStatus());
-                proyekResponseDTO.setCreatedAt(proyek.getCreatedAt());
-                proyekResponseDTO.setUpdatedAt(proyek.getUpdatedAt());
-
-                developerResponseDTO.setId(proyek.getDeveloper().getId());
-                developerResponseDTO.setNama(proyek.getDeveloper().getNama());
-                developerResponseDTO.setAlamat(proyek.getDeveloper().getAlamat());
-                developerResponseDTO.setTanggalBerdiri(proyek.getDeveloper().getTanggalBerdiri());
-                developerResponseDTO.setEmail(proyek.getDeveloper().getEmail());
-                developerResponseDTO.setCreatedAt(proyek.getDeveloper().getCreatedAt());
-                developerResponseDTO.setUpdatedAt(proyek.getDeveloper().getUpdatedAt());
-                proyekResponseDTO.setDeveloper(developerResponseDTO);
-
-                listProyekResponseDTO.add(proyekResponseDTO);
-            });
-
-            pekerjaResponseDTO.setListProyek(listProyekResponseDTO);
-        }
-
-        return pekerjaResponseDTO;
+        return pekerjaToPekerjaResponseDTO(pekerja);
     }
 
     @Override
@@ -172,6 +140,7 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
 
         var listProyekFromDTO = pekerjaDTO.getListProyek();
         if (listProyekFromDTO != null) {
+            listProyekFromDTO = listProyekFromDTO.stream().distinct().toList();
 
             var listProyekExisting = pekerja.getListProyek();
 
@@ -215,6 +184,64 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
         }
 
         var updatePekerja = pekerjaDb.save(pekerja);
-        return getPekerjaById(updatePekerja.getId());
+        return pekerjaToPekerjaResponseDTO(updatePekerja);
+    }
+
+    @Override
+    public void deletePekerja(List<Long> listIdPekerja) throws EntityNotFoundException, ConstraintViolationException {
+        var listPekerja = new ArrayList<Pekerja>();
+
+        listIdPekerja.forEach(idPekerja -> {
+            var pekerja = pekerjaDb.findById(idPekerja).orElse(null);
+            if (pekerja == null) {
+                throw new EntityNotFoundException(String.format("Pekerja dengan ID %d tidak ditemukan", idPekerja));
+            }
+
+            listPekerja.add(pekerja);
+        });
+
+        pekerjaDb.deleteAll(listPekerja);
+    }
+
+    private PekerjaResponseDTO pekerjaToPekerjaResponseDTO(Pekerja pekerja) {
+        var pekerjaResponseDTO = new PekerjaResponseDTO();
+        pekerjaResponseDTO.setId(pekerja.getId());
+        pekerjaResponseDTO.setNama(pekerja.getNama());
+        pekerjaResponseDTO.setUsia(pekerja.getUsia());
+        pekerjaResponseDTO.setPekerjaan(pekerja.getPekerjaan());
+        pekerjaResponseDTO.setBiografi(pekerja.getBiografi());
+        pekerjaResponseDTO.setCreatedAt(pekerja.getCreatedAt());
+        pekerjaResponseDTO.setUpdatedAt(pekerja.getUpdatedAt());
+
+        if (pekerja.getListProyek() != null) {
+            var listProyekResponseDTO = new ArrayList<ProyekResponseDTO>();
+            pekerja.getListProyek().forEach(proyek -> {
+                var proyekResponseDTO = new ProyekResponseDTO();
+                var developerResponseDTO = new DeveloperResponseDTO();
+
+                proyekResponseDTO.setId(proyek.getId());
+                proyekResponseDTO.setNama(proyek.getNama());
+                proyekResponseDTO.setDeskripsi(proyek.getDeskripsi());
+                proyekResponseDTO.setTanggalMulai(proyek.getTanggalMulai());
+                proyekResponseDTO.setTanggalSelesai(proyek.getTanggalSelesai());
+                proyekResponseDTO.setStatus(proyek.getStatus());
+                proyekResponseDTO.setCreatedAt(proyek.getCreatedAt());
+                proyekResponseDTO.setUpdatedAt(proyek.getUpdatedAt());
+
+                developerResponseDTO.setId(proyek.getDeveloper().getId());
+                developerResponseDTO.setNama(proyek.getDeveloper().getNama());
+                developerResponseDTO.setAlamat(proyek.getDeveloper().getAlamat());
+                developerResponseDTO.setTanggalBerdiri(proyek.getDeveloper().getTanggalBerdiri());
+                developerResponseDTO.setEmail(proyek.getDeveloper().getEmail());
+                developerResponseDTO.setCreatedAt(proyek.getDeveloper().getCreatedAt());
+                developerResponseDTO.setUpdatedAt(proyek.getDeveloper().getUpdatedAt());
+                proyekResponseDTO.setDeveloper(developerResponseDTO);
+
+                listProyekResponseDTO.add(proyekResponseDTO);
+            });
+
+            pekerjaResponseDTO.setListProyek(listProyekResponseDTO);
+        }
+        return pekerjaResponseDTO;
     }
 }

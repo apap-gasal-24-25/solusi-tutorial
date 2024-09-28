@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.1.7/css/dataTables.dataTables.css" />
+  <object th:include="~{fragments/common :: js}" th:remove="tag "></object>
+  <object th:include="~{fragments/common :: css}" th:remove="tag "></object>
+
+  <title>Proyek Datatable</title>
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<div class="container">
+  <div class="text-center my-4">
+    <h2>Daftar Pekerja</h2>
+  </div>
+  <div class="text-center m-3">
+    <a type="button" class="btn btn-primary m-2" href="/pekerja/add">Tambah Pekerja</a>
+    <a type="button" class="btn btn-md btn-primary" href="/">Home</a>
+  </div>
+  <form>
+
+  </form>
+  <table id="project-table" class="display">
+    <thead>
+    <tr>
+      <th scope="col">Nama</th>
+      <th scope="col">Developer</th>
+      <th scope="col">Tanggal Mulai</th>
+      <th scope="col">Tanggal Selesai</th>
+      <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="project : ${projects}">
+      <td th:text="${project.nama}"></td>
+      <td th:text="${project.developer.nama}"></td>
+      <td th:text="${project.tanggalMulai}"></td>
+      <td th:text="${project.tanggalSelesai}"></td>
+      <td th:text="${project.status}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/2.1.7/js/dataTables.js"></script>
+
+<script>
+  let table = new DataTable('#project-table', {
+    // options
+  });
+</script>
+</body>
+</html>

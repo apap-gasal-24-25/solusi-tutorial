@@ -5,8 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import apap.tutorial.manpromanpro.model.Pekerja;
 
+import java.util.List;
+import java.util.UUID;
+
 @Repository
 public interface PekerjaDb extends JpaRepository<Pekerja, Long> {
     
-    // Integer deleteByIdPekerjaIn(List<Long> listIdPekerja);
+    List<Pekerja> findPekerjasByListProyek_Id(UUID proyekId);
 }

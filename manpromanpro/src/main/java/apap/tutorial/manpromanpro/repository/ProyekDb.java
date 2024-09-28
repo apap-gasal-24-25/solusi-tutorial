@@ -18,4 +18,6 @@ public interface ProyekDb extends JpaRepository<Proyek, UUID> {
     List<Proyek> findByStatus(String status, Sort sort);
 
     List<Proyek> findByNamaContainingIgnoreCaseAndStatus(String nama, String status, Sort sort);
+
+    List<Proyek> findProyeksByListPekerja_id(Long idPekerja);
 }

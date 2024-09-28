@@ -135,4 +135,9 @@ public class PekerjaController {
             return "response-error-rest";
         }
     }
+
+    @GetMapping("/pekerja/datatable")
+    public String getPekerjaDataTable(Model model) {
+        return "view-pekerja-datatable";
+    }
 }

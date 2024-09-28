@@ -49,7 +49,7 @@ public class Pekerja {
 
     @ManyToMany(mappedBy = "listPekerja", fetch = FetchType.LAZY)
     @SQLRestriction("deleted_at IS NULL")
-    List<Proyek> listProyek;
+    private List<Proyek> listProyek;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

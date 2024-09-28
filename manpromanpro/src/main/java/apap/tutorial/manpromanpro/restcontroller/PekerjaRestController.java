@@ -4,18 +4,13 @@ import apap.tutorial.manpromanpro.restdto.request.AddPekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.request.UpdatePekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.response.BaseResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import apap.tutorial.manpromanpro.restservice.PekerjaRestService;
 import jakarta.validation.Valid;
 
@@ -128,5 +123,23 @@ public class PekerjaRestController {
         baseResponseDTO.setTimestamp(new Date());
 
         return new ResponseEntity<>(baseResponseDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deletePekerja(@RequestBody List<Long> listIdPekerja) {
+        var baseResponseDTO = new BaseResponseDTO<PekerjaResponseDTO>();
+
+        try {
+            pekerjaRestService.deletePekerja(listIdPekerja);
+            baseResponseDTO.setStatus(HttpStatus.OK.value());
+            baseResponseDTO.setMessage(String.format("List Pekerja berhasil dihapus"));
+            baseResponseDTO.setTimestamp(new Date());
+            return new ResponseEntity<>(baseResponseDTO, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            baseResponseDTO.setStatus(HttpStatus.NOT_FOUND.value());
+            baseResponseDTO.setMessage(e.getMessage());
+            baseResponseDTO.setTimestamp(new Date());
+            return new ResponseEntity<>(baseResponseDTO, HttpStatus.NOT_FOUND);
+        }
     }
 }
