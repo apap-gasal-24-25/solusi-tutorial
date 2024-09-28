@@ -11,8 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.fasterxml.jackson.databind.JsonSerializable.Base;
-
 import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
 
 import apap.tutorial.manpromanpro.model.Pekerja;

@@ -7,7 +7,7 @@
 <body>
 <div th:fragment="project-card(proyek)" style="width: 40rem;">
     <div class="card" style="width: 40rem;">
-        <div class="card-body">
+        <div class="card-body mx-4 my-2">
             <h5 th:text="${proyek.nama}" class="card-title row my-3"></h5>
             <div class="row" th:if="${proyek.listPekerja.size} != 0">
                 <h6 class="card-subtitle row my-3">Pekerja: </h6>
@@ -21,7 +21,7 @@
                 class="card-subtitle row my-3"></h6>
             <h6 th:text="'Status : ' + ${proyek.status}" class="card-subtitle row my-3"></h6>
             <div class="row my-3">
-                <a type="button" class="btn btn-md btn-primary col-sm-2 mx-2"
+                <a type="button" class="btn btn-md btn-primary col-sm-2"
                    th:href="@{/proyek/{idProyek}(idProyek=${proyek.id})}">Detail
                 </a>
                 <a type="button" class="btn btn-md btn-warning col-sm-2 mx-2"

@@ -24,6 +24,7 @@
                                 <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" id="nama-pekerja" th:field="*{nama}" />
+                                    <div class="text-danger" th:if="${#fields.hasErrors('nama')}" th:errors="*{nama}"></div>
                                 </div>
                             </div>
 
@@ -32,6 +33,7 @@
                                 <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="number" id="usia-pekerja" th:field="*{usia}" />
+                                    <div class="text-danger" th:if="${#fields.hasErrors('usia')}" th:errors="*{usia}"></div>
                                 </div>
                             </div>
 
@@ -40,6 +42,7 @@
                                 <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
                                 <div class="col-sm-9">
                                     <input class="form-control" type="text" id="pekerjaan" th:field="*{pekerjaan}" />
+                                    <div class="text-danger" th:if="${#fields.hasErrors('pekerjaan')}" th:errors="*{pekerjaan}"></div>
                                 </div>
                             </div>
 

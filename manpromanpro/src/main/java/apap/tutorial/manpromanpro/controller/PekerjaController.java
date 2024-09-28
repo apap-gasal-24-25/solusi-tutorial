@@ -120,25 +120,15 @@ public class PekerjaController {
     public String addPekerja(@Valid @ModelAttribute("pekerjaDTO") AddPekerjaRequestRestDTO pekerjaDTO, 
                                 BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            List<String> errors = bindingResult.getAllErrors()
-                    .stream()
-                    .map(error -> {
-                        if (error instanceof FieldError) {
-                            FieldError fieldError = (FieldError) error;
-                            return fieldError.getField() + ": " + error.getDefaultMessage();
-                        }
-                        return error.getDefaultMessage();
-                    })
-                    .collect(Collectors.toList());
-
-            model.addAttribute("errors", errors);
-            return "response-error";
+            model.addAttribute("listProyek", proyekService.getAllProyek());
+            return "form-add-pekerja-rest";
         }
         
         try {
             var pekerja = pekerjaService.addPekerjaFromRest(pekerjaDTO);
             model.addAttribute("responseMessage",
-                    String.format("Pekerja %s dengan ID %d berhasil ditambahkan.", pekerja.getNama(), pekerja.getId()));
+                    String.format("Pekerja %s dengan ID %d berhasil ditambahkan.", pekerja.getNama(), 
+                    pekerja.getId()));
             return "response-pekerja";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
