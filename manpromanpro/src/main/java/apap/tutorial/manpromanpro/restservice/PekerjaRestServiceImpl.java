@@ -5,6 +5,7 @@ import apap.tutorial.manpromanpro.restdto.request.UpdatePekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.response.DeveloperResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.ProyekResponseDTO;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import apap.tutorial.manpromanpro.model.Pekerja;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Service
+@Transactional
 public class PekerjaRestServiceImpl implements PekerjaRestService {
     @Autowired
     PekerjaDb pekerjaDb;
