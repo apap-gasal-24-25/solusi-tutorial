@@ -65,45 +65,7 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
         var listPekerja = pekerjaDb.findAll();
         var listPekerjaResponseDTO = new ArrayList<PekerjaResponseDTO>();
         listPekerja.forEach(pekerja -> {
-            var pekerjaResponseDTO = new PekerjaResponseDTO();
-            pekerjaResponseDTO.setId(pekerja.getId());
-            pekerjaResponseDTO.setNama(pekerja.getNama());
-            pekerjaResponseDTO.setUsia(pekerja.getUsia());
-            pekerjaResponseDTO.setPekerjaan(pekerja.getPekerjaan());
-            pekerjaResponseDTO.setBiografi(pekerja.getBiografi());
-            pekerjaResponseDTO.setCreatedAt(pekerja.getCreatedAt());
-            pekerjaResponseDTO.setUpdatedAt(pekerja.getUpdatedAt());
-
-            if (pekerja.getListProyek() != null) {
-                var listProyekResponseDTO = new ArrayList<ProyekResponseDTO>();
-                pekerja.getListProyek().forEach(proyek -> {
-                    var proyekResponseDTO = new ProyekResponseDTO();
-                    var developerResponseDTO = new DeveloperResponseDTO();
-
-                    proyekResponseDTO.setId(proyek.getId());
-                    proyekResponseDTO.setNama(proyek.getNama());
-                    proyekResponseDTO.setDeskripsi(proyek.getDeskripsi());
-                    proyekResponseDTO.setTanggalMulai(proyek.getTanggalMulai());
-                    proyekResponseDTO.setTanggalSelesai(proyek.getTanggalSelesai());
-                    proyekResponseDTO.setStatus(proyek.getStatus());
-                    proyekResponseDTO.setCreatedAt(proyek.getCreatedAt());
-                    proyekResponseDTO.setUpdatedAt(proyek.getUpdatedAt());
-
-                    developerResponseDTO.setId(proyek.getDeveloper().getId());
-                    developerResponseDTO.setNama(proyek.getDeveloper().getNama());
-                    developerResponseDTO.setAlamat(proyek.getDeveloper().getAlamat());
-                    developerResponseDTO.setTanggalBerdiri(proyek.getDeveloper().getTanggalBerdiri());
-                    developerResponseDTO.setEmail(proyek.getDeveloper().getEmail());
-                    developerResponseDTO.setCreatedAt(proyek.getDeveloper().getCreatedAt());
-                    developerResponseDTO.setUpdatedAt(proyek.getDeveloper().getUpdatedAt());
-                    proyekResponseDTO.setDeveloper(developerResponseDTO);
-
-                    listProyekResponseDTO.add(proyekResponseDTO);
-                });
-
-                pekerjaResponseDTO.setListProyek(listProyekResponseDTO);
-            }
-
+            var pekerjaResponseDTO =pekerjaToPekerjaResponseDTO(pekerja);
             listPekerjaResponseDTO.add(pekerjaResponseDTO);
         });
 

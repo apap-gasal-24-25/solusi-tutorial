@@ -15,23 +15,24 @@
             <h2>Daftar Pekerja</h2>
         </div>
         <form th:object="${deleteDTO}">
-            <table class="table">
+            <table id="table-pekerja" class="table table-striped">
                 <div class="alert alert-warning" role="alert">
                     Catatan: Pekerja yang tidak dapat terpilih sudah memiliki relasi dengan suatu proyek
                 </div>
                 <thead>
                     <tr>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Usia</th>
-                        <th scope="col">Pekerjaan</th>
-                        <th scope="col">Proyek</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" class="text-center">Nama</th>
+                        <th scope="col" class="text-center">Usia</th>
+                        <th scope="col" class="text-center">Pekerjaan</th>
+                        <th scope="col" class="text-center">Proyek</th>
+                        <th scope="col" class="text-center">Action</th>
+                        <th scope="col" class="text-center">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="pekerja : ${listPekerja}">
                         <td th:text="${pekerja.nama}"></td>
-                        <td th:text="${pekerja.usia}"></td>
+                        <td class="text-center" th:text="${pekerja.usia}"></td>
                         <td th:text="${pekerja.pekerjaan}"></td>
                         <td>
                             <ul>
@@ -39,7 +40,7 @@
                             </ul>
                         </td>
                         <td>
-                            <div>
+                            <div class="text-center">
                                 <a type="button" class="btn btn-md btn-primary"
                                     th:href="@{/pekerja/rest/{idPekerja}(idPekerja=${pekerja.id})}">Detail
                                 </a>
@@ -49,9 +50,11 @@
                             </div>
                         </td>
                         <td>
-                            <input type="checkbox" class="form-check-input" id="flexCheckDefault"
-                                th:field="*{listPekerja}" th:value="${pekerja.id}"
-                                th:disabled="${pekerja.getListProyek() != null and pekerja.getListProyek().size() > 0}">
+                            <div class="text-center">
+                                <input type="checkbox" class="form-check-input" id="flexCheckDefault"
+                                    th:field="*{listPekerja}" th:value="${pekerja.id}"
+                                    th:disabled="${pekerja.getListProyek() != null and pekerja.getListProyek().size() > 0}">
+                            </div>
                         </td>
                     </tr>
                 </tbody>
