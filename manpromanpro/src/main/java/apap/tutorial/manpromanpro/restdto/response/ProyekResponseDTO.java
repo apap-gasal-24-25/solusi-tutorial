@@ -26,6 +26,8 @@ public class ProyekResponseDTO {
     private DeveloperResponseDTO developer;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<PekerjaResponseDTO> listPekerja;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone="Asia/Jakarta")
     private Date createdAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone="Asia/Jakarta")
     private Date updatedAt;
 }
