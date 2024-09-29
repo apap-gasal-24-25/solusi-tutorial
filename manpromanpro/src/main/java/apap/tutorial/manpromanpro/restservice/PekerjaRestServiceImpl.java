@@ -6,7 +6,6 @@ import apap.tutorial.manpromanpro.restdto.response.DeveloperResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.ProyekResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +13,7 @@ import apap.tutorial.manpromanpro.model.Pekerja;
 import apap.tutorial.manpromanpro.model.Proyek;
 import apap.tutorial.manpromanpro.repository.PekerjaDb;
 import apap.tutorial.manpromanpro.repository.ProyekDb;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -188,6 +188,7 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
     @Override
     public void deletePekerja(List<Long> listIdPekerja) throws EntityNotFoundException, ConstraintViolationException {
         var listPekerja = new ArrayList<Pekerja>();
+        listIdPekerja = listIdPekerja.stream().distinct().toList();
 
         listIdPekerja.forEach(idPekerja -> {
             var pekerja = pekerjaDb.findById(idPekerja).orElse(null);

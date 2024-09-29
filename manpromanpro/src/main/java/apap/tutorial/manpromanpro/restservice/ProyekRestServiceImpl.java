@@ -10,14 +10,15 @@ import apap.tutorial.manpromanpro.model.Proyek;
 import apap.tutorial.manpromanpro.repository.DeveloperDb;
 import apap.tutorial.manpromanpro.repository.PekerjaDb;
 import apap.tutorial.manpromanpro.repository.ProyekDb;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class ProyekRestServiceImpl implements ProyekRestService {
 
     @Autowired
@@ -45,6 +46,9 @@ public class ProyekRestServiceImpl implements ProyekRestService {
 
         proyek.setListPekerja(new ArrayList<>());
         if (proyekDTO.getListPekerja() != null) {
+            var listPkerjaFromDTO = proyekDTO.getListPekerja();
+            proyekDTO.setListPekerja(listPkerjaFromDTO.stream().distinct().toList());
+
             proyekDTO.getListPekerja().forEach(idPekerja -> {
                 Pekerja pekerja = pekerjaDB.findById(idPekerja).orElse(null);
                 if (pekerja != null) {
@@ -86,7 +90,10 @@ public class ProyekRestServiceImpl implements ProyekRestService {
             proyek.setDeveloper(developer);
         }
 
-        if (proyekDTO.getListPekerja() != null && !proyekDTO.getListPekerja().isEmpty()) {
+        if (proyekDTO.getListPekerja() != null) {
+            var listPkerjaFromDTO = proyekDTO.getListPekerja();
+            proyekDTO.setListPekerja(listPkerjaFromDTO.stream().distinct().toList());
+
             var listPekerjaExisting = proyek.getListPekerja();
 
             if (listPekerjaExisting != null && !listPekerjaExisting.isEmpty()) {
