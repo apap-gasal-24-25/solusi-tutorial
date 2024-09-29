@@ -2,6 +2,7 @@ package apap.tutorial.manpromanpro.service;
 
 import java.util.List;
 import apap.tutorial.manpromanpro.restdto.request.AddPekerjaRequestRestDTO;
+import apap.tutorial.manpromanpro.restdto.request.UpdatePekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
 import apap.tutorial.manpromanpro.model.Pekerja;
 
@@ -12,5 +13,6 @@ public interface PekerjaService {
     Pekerja addPekerja(Pekerja pekerja);
     List<Pekerja> getAllPekerja();
     void deleteListPekerja(List<Pekerja> listPekerja);
+    PekerjaResponseDTO updatePekerjaFromRest(UpdatePekerjaRequestRestDTO pekerjaDTO) throws Exception;
 }
 

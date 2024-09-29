@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <object th:include="~{fragments/common :: js}" th:remove="tag "></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag "></object>
+    <title>Tambah Pekerja</title>
+</head>
+
+<body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <div class="container">
+        <div class="text-center my-4">
+            <h2>Update Pekerja</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="card" style="width: 60rem;">
+                <div class="card-body">
+                    <div>
+                        <form th:action="@{/pekerja/rest/update}" th:object="${pekerjaDTO}" method="POST">
+                            <input class="form-control" type="hidden" th:field="*{id}" th:value="*{id}"/>
+
+                            <div class="row my-3">
+                                <label for="nama-pekerja" class="col-sm-2 fw-bold col-form-label">Nama</label>
+                                <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" id="nama-pekerja" th:field="*{nama}" th:value="*{nama}" />
+                                    <div class="text-danger" th:if="${#fields.hasErrors('nama')}" th:errors="*{nama}"></div>
+                                </div>
+                            </div>
+
+                            <div class="row my-3">
+                                <label for="usia-pekerja" class="col-sm-2 fw-bold col-form-label">Usia</label>
+                                <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="number" id="usia-pekerja" th:field="*{usia}" th:value="*{usia}" />
+                                    <div class="text-danger" th:if="${#fields.hasErrors('usia')}" th:errors="*{usia}"></div>
+                                </div>
+                            </div>
+
+                            <div class="row my-3">
+                                <label for="pekerjaan" class="col-sm-2 fw-bold col-form-label">Pekerjaan</label>
+                                <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" id="pekerjaan" th:field="*{pekerjaan}" th:value="*{pekerjaan}" />
+                                    <div class="text-danger" th:if="${#fields.hasErrors('pekerjaan')}" th:errors="*{pekerjaan}"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row my-3">
+                                <label for="biografi" class="col-sm-2 fw-bold col-form-label">Biografi</label>
+                                <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" id="biografi" th:field="*{biografi}" th:value="*{biografi}"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group row my-3">
+                                <label class="col-sm-2 fw-bold col-form-label">Proyek</label>
+                                <p class="col-sm-1 fw-bold col-form-label" style="width: 2%">:</p>
+                                <div class="col-sm-9">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" th:each="proyek : ${listProyek}">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" th:field="*{listProyek}"
+                                                    th:value="${proyek.id}" th:checked="${#lists.contains(listProyek, proyek.id)}" />
+                                                <label class="form-check-label">
+                                                    <span th:text="${proyek.nama}"></span> -
+                                                    <span th:text="${proyek.developer.nama}"></span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="text-center m-3">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <a class="btn btn-primary" href="/">Home</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

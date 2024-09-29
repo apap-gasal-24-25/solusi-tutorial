@@ -7,7 +7,6 @@ import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.ProyekResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.hibernate.ObjectNotFoundException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import apap.tutorial.manpromanpro.model.Proyek;
 import apap.tutorial.manpromanpro.repository.PekerjaDb;
 import apap.tutorial.manpromanpro.repository.ProyekDb;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 

@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 @Service
-@Transactional
 public class ProyekRestServiceImpl implements ProyekRestService {
 
     @Autowired
@@ -31,7 +30,6 @@ public class ProyekRestServiceImpl implements ProyekRestService {
     PekerjaDb pekerjaDB;
 
     @Override
-    @Transactional
     public ProyekResponseDTO addProyek(AddProyekRequestRestDTO proyekDTO) {
         Proyek proyek = new Proyek();
         proyek.setNama(proyekDTO.getNama());

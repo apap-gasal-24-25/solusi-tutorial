@@ -44,7 +44,7 @@ public class ProyekRestController {
         ProyekResponseDTO proyek = proyekRestService.addProyek(proyekDTO);
         if (proyek == null) {
             baseResponseDTO.setStatus(HttpStatus.NOT_FOUND.value());
-            baseResponseDTO.setMessage(String.format("Data Proyek tidak ditemukan"));
+            baseResponseDTO.setMessage(String.format("Data proyek tidak ditemukan"));
             baseResponseDTO.setTimestamp(new Date());
             return new ResponseEntity<>(baseResponseDTO, HttpStatus.NOT_FOUND);
         }
@@ -62,7 +62,7 @@ public class ProyekRestController {
         var proyek = proyekRestService.getProyekById(idProyek);
         if (proyek == null) {
             baseResponseDTO.setStatus(HttpStatus.NOT_FOUND.value());
-            baseResponseDTO.setMessage(String.format("Proyek dengan ID %s tidak ditemukan", idProyek));
+            baseResponseDTO.setMessage(String.format("Data proyek tidak ditemukan"));
             baseResponseDTO.setTimestamp(new Date());
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(baseResponseDTO);
@@ -70,7 +70,7 @@ public class ProyekRestController {
 
         baseResponseDTO.setStatus(HttpStatus.OK.value());
         baseResponseDTO.setData(proyek);
-        baseResponseDTO.setMessage(String.format("Proyek dengan ID %s berhasil ditemukan", proyek.getId()));
+        baseResponseDTO.setMessage(String.format("Proyek dengan ID %s berhasil ditemukan", idProyek));
         baseResponseDTO.setTimestamp(new Date());
         return ResponseEntity.status(HttpStatus.OK).body(baseResponseDTO);
     }
@@ -95,7 +95,7 @@ public class ProyekRestController {
         var proyek = proyekRestService.updateProyek(proyekDTO);
         if (proyek == null) {
             baseResponseDTO.setStatus(HttpStatus.NOT_FOUND.value());
-            baseResponseDTO.setMessage(String.format("Proyek dengan ID %s tidak ditemukan", proyek.getId()));
+            baseResponseDTO.setMessage(String.format("Data proyek tidak ditemukan"));
             baseResponseDTO.setTimestamp(new Date());
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(baseResponseDTO);
@@ -103,7 +103,7 @@ public class ProyekRestController {
 
         baseResponseDTO.setStatus(HttpStatus.OK.value());
         baseResponseDTO.setData(proyek);
-        baseResponseDTO.setMessage(String.format("Proyek dengan ID %s berhasil diubah", proyek.getId()));
+        baseResponseDTO.setMessage(String.format("Proyek dengan ID %s berhasil diubah", proyekDTO.getId()));
         baseResponseDTO.setTimestamp(new Date());
         return ResponseEntity.status(HttpStatus.OK).body(baseResponseDTO);
     }
@@ -114,7 +114,7 @@ public class ProyekRestController {
         var proyek = proyekRestService.getProyekById(idProyek);
         if (proyek == null) {
             baseResponseDTO.setStatus(HttpStatus.NOT_FOUND.value());
-            baseResponseDTO.setMessage(String.format("Proyek dengan ID %s tidak ditemukan", idProyek));
+            baseResponseDTO.setMessage(String.format("Data proyek tidak ditemukan"));
             baseResponseDTO.setTimestamp(new Date());
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(baseResponseDTO);
@@ -123,7 +123,7 @@ public class ProyekRestController {
         proyekRestService.deleteProyek(idProyek);
 
         baseResponseDTO.setStatus(HttpStatus.OK.value());
-        baseResponseDTO.setMessage(String.format("Proyek dengan ID %s berhasil dihapus", proyek.getId()));
+        baseResponseDTO.setMessage(String.format("Proyek dengan ID %s berhasil dihapus", idProyek));
         baseResponseDTO.setTimestamp(new Date());
         return ResponseEntity.status(HttpStatus.OK).body(baseResponseDTO);
     }

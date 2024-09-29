@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import apap.tutorial.manpromanpro.restdto.request.AddPekerjaRequestRestDTO;
+import apap.tutorial.manpromanpro.restdto.request.UpdatePekerjaRequestRestDTO;
 import apap.tutorial.manpromanpro.restdto.response.BaseResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -103,7 +104,6 @@ public class PekerjaServiceImpl implements PekerjaService {
     }
 
     @Override
-    @Transactional
     public void deleteListPekerja(List<Pekerja> listPekerja) {
         var pekerjaToDelete = new ArrayList<Pekerja>();
 
@@ -116,5 +116,26 @@ public class PekerjaServiceImpl implements PekerjaService {
         }
 
         pekerjaDb.deleteAll(pekerjaToDelete);
+    }
+
+    @Override
+    public PekerjaResponseDTO updatePekerjaFromRest(UpdatePekerjaRequestRestDTO pekerjaDTO) throws Exception {
+        var response = webClient
+                .put()
+                .uri("/pekerja/update")
+                .bodyValue(pekerjaDTO)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<BaseResponseDTO<PekerjaResponseDTO>>() {})
+                .block();
+
+        if (response == null) {
+            throw new Exception("Failed consume API updatePekerja");
+        }
+
+        if (response.getStatus() != 200) {
+            throw new Exception(response.getMessage());
+        }
+
+        return response.getData();
     }
 }
