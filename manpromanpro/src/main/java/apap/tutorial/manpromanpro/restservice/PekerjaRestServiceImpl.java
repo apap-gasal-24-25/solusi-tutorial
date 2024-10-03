@@ -6,7 +6,7 @@ import apap.tutorial.manpromanpro.restdto.response.DeveloperResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.PekerjaResponseDTO;
 import apap.tutorial.manpromanpro.restdto.response.ProyekResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.exception.ConstraintViolationException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import apap.tutorial.manpromanpro.model.Pekerja;
@@ -148,7 +148,7 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
     }
 
     @Override
-    public void deletePekerja(List<Long> listIdPekerja) throws EntityNotFoundException {
+    public void deletePekerja(List<Long> listIdPekerja) throws EntityNotFoundException, ConstraintViolationException {
         var listPekerja = new ArrayList<Pekerja>();
         listIdPekerja = listIdPekerja.stream().distinct().toList();
 
@@ -156,6 +156,10 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
             var pekerja = pekerjaDb.findById(idPekerja).orElse(null);
             if (pekerja == null) {
                 throw new EntityNotFoundException(String.format("Pekerja dengan ID %d tidak ditemukan", idPekerja));
+            }
+
+            if (!(pekerja.getListProyek() == null || pekerja.getListProyek().isEmpty())) {
+                throw new ConstraintViolationException(String.format("Pekerja dengan ID %d masih memiliki proyek", idPekerja), null);
             }
 
             listPekerja.add(pekerja);
