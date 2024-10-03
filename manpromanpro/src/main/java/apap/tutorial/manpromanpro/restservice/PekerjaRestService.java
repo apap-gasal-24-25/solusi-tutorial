@@ -14,6 +14,6 @@ public interface PekerjaRestService {
     List<PekerjaResponseDTO> getAllPekerja();
     PekerjaResponseDTO getPekerjaById(Long idPekerja);
     PekerjaResponseDTO updatePekerjaRest(UpdatePekerjaRequestRestDTO pekerjaDTO);
-    void deletePekerja(List<Long> listIdPekerja) throws EntityNotFoundException, ConstraintViolationException;
+    void deletePekerja(List<Long> listIdPekerja) throws EntityNotFoundException;
 }
 

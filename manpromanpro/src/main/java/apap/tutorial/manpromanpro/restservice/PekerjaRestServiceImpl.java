@@ -148,7 +148,7 @@ public class PekerjaRestServiceImpl implements PekerjaRestService {
     }
 
     @Override
-    public void deletePekerja(List<Long> listIdPekerja) throws EntityNotFoundException, ConstraintViolationException {
+    public void deletePekerja(List<Long> listIdPekerja) throws EntityNotFoundException {
         var listPekerja = new ArrayList<Pekerja>();
         listIdPekerja = listIdPekerja.stream().distinct().toList();
 
