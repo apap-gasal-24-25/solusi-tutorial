@@ -62,5 +62,5 @@ public class Pekerja {
     private Date updatedAt;
 
     @Column(name = "deleted_at")
-    private Date deleted_at;
+    private Date deletedAt;
 }
