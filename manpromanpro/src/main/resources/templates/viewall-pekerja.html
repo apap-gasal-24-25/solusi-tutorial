@@ -69,8 +69,6 @@
         </form>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
         $('form').on('submit', function(e){
@@ -96,6 +94,11 @@
                 }
             })
         })
+
+        $('#table-pekerja').DataTable({
+            "lengthMenu": [10, 20, 30],
+        });
+
     })
 </script>
 </html>
